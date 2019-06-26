@@ -1,0 +1,339 @@
+<% include ../partials/header %>
+
+<div class="container">
+
+<!-------------------------------------------------------------------------------->
+<!--------------------------Video Filters----------------------------------------->
+<!-------------------------------------------------------------------------------->
+<form class="form-inline float-right my-2 my-lg-0 ml-auto" action="/videos" method="GET">
+    <div class="row">
+    <div class="d-flex p-2 bd-highlight">
+      <div class="col">
+        <h2 class="float-left"> Video Bank </h2> 
+        </div>
+        <div class="col">
+      <input class="form-control mr-sm-2" id="search-video" type="search" placeholder="Keywords..." name = "search" aria-label="Search" value="">
+      </div>
+    
+    <div class="col">
+     <div class="input-group mb-3">
+            <div class="input-group-prepend">
+            <label class="input-group-text" for="videoSortSelect01">Sort</label>
+            </div>
+          <select class="custom-select videoSortSelect" id="videoSortSelect01" onchange="this.form.submit()" name="sort">
+            <option disabled <%= !query.exam ? "selected" : "" %>>Choose...</option>
+            <option value="Latest" <%= query.sort && query.sort==="Latest" ? "selected" : "" %>>Latest</option>
+            <option value="Earliest" <%= query.sort && query.sort==="Earliest" ? "selected" : "" %>>Earliest</option>
+            <option value="Description-Ascending" <%= query.sort && query.sort==="Description-Ascending" ? "selected" : "" %>>Description-Ascending</option>
+            <option value="Description-Descending"<%= query.sort && query.sort==="Description-Descending" ? "selected" : "" %>>Description-Descending</option>
+          </select>
+      </div>
+     </div>
+     </div>
+    </div>
+
+    <div class="container border rounded pt-1 mb-3">
+        <h4>Filters</h4>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    <label class="input-group-text" for="videoGroupSelect01">Exam</label>
+                    </div>
+                  <select class="custom-select videoGroupSelect" id="videoGroupSelect01" name="exam[]" onchange="this.form.submit()">
+                    <option class="choose-video" disabled <%= !query.exam ? "selected" : "" %>>Choose...</option>
+                    <option value="All">All</option>
+                    <option value="rf" <%= query.exam && query.exam.includes("rf") ? "selected" : "" %>>Remove Filter</option>
+                    <option value="CA Final(New)" <%= query.exam && query.exam.includes("CA Final(New)") ? "selected" : "" %>>CA Final(New)</option>
+                    <option value="CA Final(Old)" <%= query.exam && query.exam.includes("CA Final(Old)") ? "selected" : "" %>>CA Final(Old)</option>
+                    <option value="CA Intermediate(New)" <%= query.exam && query.exam.includes("CA Intermediate(New)") ? "selected" : "" %>>CA Intermediate(New)</option>
+                    <option value="CA IPCC(Old)" <%= query.exam && query.exam.includes("CA IPCC(Old)") ? "selected" : "" %>>CA IPCC(Old)</option>
+                    <option value="CA Foundation(New)" <%= query.exam && query.exam.includes("CA Foundation(New)") ? "selected" : "" %>>CA Foundation(New)</option>
+                  </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    <label class="input-group-text" for="videoGroupSelect02">Attempt</label>
+                    </div>
+                  <select class="custom-select videoGroupSelect" id="videoGroupSelect02" name="attempt[]" onchange="this.form.submit()">
+                    <option disabled <%= !query.attempt ? "selected" : "" %>>Choose...</option>
+                    <option value="All">All</option>
+                    <option value="rf" <%= query.attempt && query.attempt.includes("rf") ? "selected" : "" %>>Remove Filter</option>
+                    <option value="Nov 2019"<%= query.attempt && query.attempt.includes("Nov 2019") ? "selected" : "" %>>Nov 2019</option>
+                    <option value="May 2020"<%= query.attempt && query.attempt.includes("May 2020") ? "selected" : "" %>>May 2020</option>
+                    <option value="Nov 2020"<%= query.attempt && query.attempt.includes("Nov 2020") ? "selected" : "" %>>Nov 2020</option>
+                    <option value="May 2021"<%= query.attempt && query.attempt.includes("May 2021") ? "selected" : "" %>>May 2021</option>
+                    <option value="Nov 2021"<%= query.attempt && query.attempt.includes("Nov 2021") ? "selected" : "" %>>Nov 2021</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    <label class="input-group-text" for="videoGroupSelect03">Author</label>
+                    </div>
+                  <select class="custom-select videoGroupSelect" id="videoGroupSelect03">
+                    <option>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+            </div>
+                <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    <label class="input-group-text" for="videoGroupSelect04">Option</label>
+                    </div>
+                  <select class="custom-select videoGroupSelect" id="videoGroupSelect04">
+                    <option>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    <label class="input-group-text" for="videoGroupSelect05">Subject</label>
+                    </div>
+                    <select class="custom-select videoGroupSelect" id="videoGroupSelect05" name="subject[]" onchange="this.form.submit()">
+                    <option <%= !query.subject ? "selected" : "" %> disabled>Choose...</option>
+                    <option value="All">All</option>
+                    <option value="rf" <%= query.subject && query.subject.includes("rf") ? "selected" : "" %>>Remove Filter</option>
+                    <option value="CA Final - P1: Financial Reporting"<%= query.subject && query.subject.includes("CA Final - P1: Financial Reporting") ? "selected" : "" %>>P1:Financial Reporting</option>
+                    <option value="CA Final - P2: Strategic Financial Management"<%= query.subject && query.subject.includes("CA Final - P2: Strategic Financial Management") ? "selected" : "" %>>P2:Strategic Financial Management</option>
+                    <option value="CA Final - P3: Advanced Auditing and Professional Ethics"<%= query.subject && query.subject.includes("CA Final - P3: Advanced Auditing and Professional Ethics") ? "selected" : "" %>>P3:Advanced Auditing and Professional Ethics</option>
+                    <option value="CA Final - P4: Corporate & Economic Laws"<%= query.subject && query.subject.includes("CA Final - P4: Corporate & Economic Laws") ? "selected" : "" %>>P4:Corporate & Economic Laws</option>
+                    <option value="CA Final - P5: Strategic Cost Management and Performance Evaluation"<%= query.subject && query.subject.includes("CA Final - P5: Strategic Cost Management and Performance Evaluation") ? "selected" : "" %>>P5:Strategic Cost Management and Performance Evaluation</option>
+                    <option value="CA Final - P6A: Risk Management"<%= query.subject && query.subject.includes("CA Final - P6A: Risk Management") ? "selected" : "" %>>P6A:Risk Management</option>
+                    <option value="CA Final - P6B: Financial Services & Capital Markets"<%= query.subject && query.subject.includes("CA Final - P6B: Financial Services & Capital Markets") ? "selected" : "" %>>P6B:Financial Services & Capital Markets</option>
+                    <option value="CA Final - P6C: International Taxation"<%= query.subject && query.subject.includes("CA Final - P6C: International Taxation") ? "selected" : "" %>>P6C:International Taxation</option>
+                    <option value="CA Final - P6E: Global Financial Reporting Standards"<%= query.subject && query.subject.includes("CA Final - P6E: Global Financial Reporting Standards") ? "selected" : "" %>>P6E:Global Financial Reporting Standards</option>
+                    <option value="CA Final - P6F: Multi-disciplinary Case Study"<%= query.subject && query.subject.includes("CA Final - P6F: Multi-disciplinary Case Study") ? "selected" : "" %>>P6F:Multi-disciplinary Case Study</option>
+                    <option value="CA Final - P7: Direct Tax Laws & International Taxation"<%= query.subject && query.subject.includes("CA Final - P7: Direct Tax Laws & International Taxation") ? "selected" : "" %>>P7:Direct Tax Laws & International Taxation</option>
+                    <option value="CA Final - P8: Indirect Tax Laws"<%= query.subject && query.subject.includes("CA Final - P8: Indirect Tax Laws") ? "selected" : "" %>>P8:Indirect Tax Law</option>
+                  </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    <label class="input-group-text" for="videoGroupSelect06">Topic</label>
+                    </div>
+                  <select class="custom-select videoGroupSelect" id="videoGroupSelect06">
+                    <option>Choose...</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                    <label class="input-group-text" for="videoGroupSelect07">Subtopic</label>
+                    </div>
+                  <select class="custom-select videoGroupSelect" id="videoGroupSelect07">
+                  <option>Choose...</option>
+
+                  </select>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <div class="col-md-1">
+                <a class="btn btn-primary" href="/videos" id="clear-video-form">Clear All Filters</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<!-------------------------------------------------------------------------------->
+<!----------------------------Video Table----------------------------------------->
+<!-------------------------------------------------------------------------------->
+
+
+
+<div class="container videobox mt-4">
+<div class="container overflow-auto py-4" id="container_video">
+    <div class="row">
+      <%videos.forEach(function(video){%>   
+        <div class="col-md-4 card_video pl-0">
+          <div class="card">
+              <div class="embed-responsive embed-responsive-16by9 card-img-top">
+                <iframe width="560" height="315" class="embed-responsive-item" src="<%=video.url%>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            <div class="card-body">
+              <h6 class="card-title"><%=video.title%></h6>
+              <small class="text-primary">Faculty: <span class="text-capitalize"><%=video.author.username%></span></small>
+              <p><small class="card-text"><span class="text-primary">Description:</span> <%-video.description.substring(0, 100) %>...</small></p>
+              <small class="card-text"><span class="text-primary">Applicable to:</span><%=video.exam%></small><br>
+              <small class="card-text"><span class="text-primary">Applicable attempts:</span> <%=video.attempt%></small>
+            </div>
+            <!--FOOTER-->
+            <div class="card-footer">
+              <small class="text-muted">Upload: <%=video.createdAt.toDateString()%></small> 
+              <!--Ownership Criteria of Videos-->
+              <% if(currentUser && (currentUser.isFaculty || currentUser.isAdmin) && (JSON.stringify(currentUser._id) === JSON.stringify(video.author.id))) {%>
+              <a class="btn btn-primary btn-sm ml-4" href="/videos/<%=video._id %>/edit" role="button">Edit</a>
+              <form id="delete-video-form" class="d-inline-block" action="/videos/<%=video._id%>?_method=DELETE" method="POST">
+                  <button type="submit" class="btn btn-danger btn-sm ml-1">Delete</button>
+              </form>
+              <%}else if(currentUser && currentUser.isStudent){%>
+              <form id="save-video-form" class="d-inline float-right" action="/user/<%=currentUser._id%>/videos/<%=video._id%>?_method=PUT" method="POST">
+                  <button type="submit" id="video-bookmark-button" class="btn btn-sm ml-1 <%=currentUser.videoBookmarks.includes(video.id) ? "btn-info": "btn-warning" %>">
+                    <%=currentUser.videoBookmarks.includes(video.id) ? "Bookmarked" : "Bookmark" %></button>
+              </form>
+              <%} else if(!currentUser){%>
+               <form id="save-video-form" class="d-inline float-right" action="#">
+                  <button type="submit" class="btn btn-warning btn-sm ml-1 student-alert">Bookmark</button>
+              </form>
+              <%}%>
+            </div>
+          </div>
+          </div>
+      <%})%>
+    </div>
+</div>
+</div>
+
+</div>
+<script>
+
+$(document).ready( function(){
+  <%if(!currentUser) {%>
+  $(".student-alert").on("click", function(e){
+    e.preventDefault();
+    alert("You need to sign up as a student to bookmark these videos!");
+    $(this).blur();
+  });
+  <%}%>
+  
+  <%if(currentUser && currentUser.isStudent) {%>
+  $(document).ready(function(){ 
+   $("#save-video-form").on("submit", function(e){
+    $("#video-bookmark-button").toggleClass(function(i, class){
+      return class === "btn-warning" ? "btn-info" : "btn:info";
+    }).text(function(i, text){
+      return text=== "Bookmarked" ? "Bookmark" : "Bookmarked";
+    }).blur();
+  });
+})
+  <%}%>
+   });
+  
+</script>    
+
+
+<script type="text/javascript" src="scripts/main.js"></script>
+<% include ../partials/footer %>
+
+
+
+          <!-- <div class="col-md-4 card_video">-->
+         <!-- <div class="card">-->
+         <!--   <img src="..." class="card-img-top" alt="...">-->
+         <!--   <div class="card-body">-->
+         <!--     <h5 class="card-title">Card title</h5>-->
+         <!--     <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>-->
+         <!--   </div>-->
+         <!--   <div class="card-footer">-->
+         <!--     <small class="text-muted">Last updated 3 mins ago</small>-->
+         <!--   </div>-->
+         <!-- </div>-->
+         <!--  </div>-->
+         <!--  <div class="col-md-4 card_video">-->
+         <!-- <div class="card">-->
+         <!--   <img src="..." class="card-img-top" alt="...">-->
+         <!--   <div class="card-body">-->
+         <!--     <h5 class="card-title">Card title</h5>-->
+         <!--     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>-->
+         <!--   </div>-->
+         <!--   <div class="card-footer">-->
+         <!--     <small class="text-muted">Last updated 3 mins ago</small>-->
+         <!--   </div>-->
+         <!--</div>-->
+         <!--</div>-->
+         <!--  <div class="col-md-4 card_video">-->
+         <!--<div class="card">-->
+         <!--     <div class="embed-responsive embed-responsive-16by9 card-img-top">-->
+         <!--       <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/mk48xRzuNvA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
+         <!--     </div>-->
+         <!--   <div class="card-body">-->
+         <!--     <h5 class="card-title">Card title</h5>-->
+         <!--     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
+         <!--   </div>-->
+         <!--   <div class="card-footer">-->
+         <!--     <small class="text-muted">Last updated 3 mins ago</small>-->
+         <!--   </div>-->
+         <!-- </div>-->
+         <!-- </div>-->
+         <!--  <div class="col-md-4 card_video">-->
+         <!-- <div class="card">-->
+         <!--   <img src="..." class="card-img-top" alt="...">-->
+         <!--   <div class="card-body">-->
+         <!--     <h5 class="card-title">Card title</h5>-->
+         <!--     <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>-->
+         <!--   </div>-->
+         <!--   <div class="card-footer">-->
+         <!--     <small class="text-muted">Last updated 3 mins ago</small>-->
+         <!--   </div>-->
+         <!-- </div>-->
+         <!-- </div>-->
+         <!--  <div class="col-md-4 card_video">-->
+         <!-- <div class="card">-->
+         <!--   <img src="..." class="card-img-top" alt="...">-->
+         <!--   <div class="card-body">-->
+         <!--     <h5 class="card-title">Card title</h5>-->
+         <!--     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>-->
+         <!--   </div>-->
+         <!--   <div class="card-footer">-->
+         <!--     <small class="text-muted">Last updated 3 mins ago</small>-->
+         <!--   </div>-->
+         <!--</div> -->
+         <!--</div>-->
+         <!--  <div class="col-md-4 card_video">-->
+         <!--<div class="card">-->
+         <!--     <div class="embed-responsive embed-responsive-16by9 card-img-top">-->
+         <!--       <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/mk48xRzuNvA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>-->
+         <!--     </div>-->
+         <!--   <div class="card-body">-->
+         <!--     <h5 class="card-title">Card title</h5>-->
+         <!--     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
+         <!--   </div>-->
+         <!--   <div class="card-footer">-->
+         <!--     <small class="text-muted">Last updated 3 mins ago</small>-->
+         <!--   </div>-->
+         <!-- </div>-->
+         <!-- </div>-->
+         <!--  <div class="col-md-4 card_video">-->
+         <!-- <div class="card">-->
+         <!--   <img src="..." class="card-img-top" alt="...">-->
+         <!--   <div class="card-body">-->
+         <!--     <h5 class="card-title">Card title</h5>-->
+         <!--     <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>-->
+         <!--   </div>-->
+         <!--   <div class="card-footer">-->
+         <!--     <small class="text-muted">Last updated 3 mins ago</small>-->
+         <!--   </div>-->
+         <!-- </div>-->
+         <!-- </div>-->
+         <!--  <div class="col-md-4 card_video">-->
+         <!-- <div class="card">-->
+         <!--   <img src="..." class="card-img-top" alt="...">-->
+         <!--   <div class="card-body">-->
+         <!--     <h5 class="card-title">Card title</h5>-->
+         <!--     <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>-->
+         <!--   </div>-->
+         <!--   <div class="card-footer">-->
+         <!--     <small class="text-muted">Last updated 3 mins ago</small>-->
+         <!--   </div>-->
+         <!--</div>-->

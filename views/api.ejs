@@ -1,0 +1,310 @@
+<% include ./partials/header %>
+
+<div class="container">
+
+
+
+<!-------------------------------------------------------------------------------->
+<!----------------------------Video Table----------------------------------------->
+<!-------------------------------------------------------------------------------->
+
+
+
+<div class="container videobox mt-4">
+<div class="container overflow-auto py-4" id="ajax-api-container_video">
+    <!-- Button trigger modal -->
+<div class="text-right">
+<button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModalScrollable" id="#exampleModalScrollable">
+ Upload
+</button>
+</div>
+
+    <div class="row" id="video-row-append">
+      <%videos.forEach(function(video){%>   
+        <div class="col-md-4 card_video pl-0">
+          <div class="card">
+              <div class="embed-responsive embed-responsive-16by9 card-img-top">
+                <iframe width="560" height="315" class="embed-responsive-item" src="<%=video.url%>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            <div class="card-body">
+              <h6 class="card-title"><%=video.title%></h6>
+              <p><small class="card-text"><span class="text-primary">Description:</span> <%-video.description.substring(0, 100) %>...</small></p>
+              <small class="card-text"><span class="text-primary">Applicable to:</span><%=video.exam%></small><br>
+              <small class="card-text"><span class="text-primary">Applicable attempts:</span> <%=video.attempt%></small>
+            </div>
+            <!--FOOTER-->
+            <div class="card-footer">
+              <small class="text-muted">Upload: <%=video.createdAt.toDateString()%></small> 
+              
+              <!--<button type="button" class="btn btn-primary btn-sm ml-4" data-toggle="modal" data-target="#exampleModal">-->
+              <!--   Edit-->
+              <!--</button>-->
+              <form id="ajax-api-delete-video-form" class="d-inline-block" action="/videos/<%=video._id%>?_method=DELETE" method="POST">
+                  <button type="submit" class="btn btn-danger btn-sm ml-1">Delete</button>
+              </form>
+            </div>
+          </div>
+          </div>
+      <%})%>
+    </div>
+</div>
+</div>
+</div>
+
+<!---------------------------->
+<!--------UPLOAD FORM!!------->
+<!---------------------------->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">Upload Video</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+<!-- FORM -->
+      <div class="modal-body">
+<div class="container" id="ajax-video-uploader">
+
+<form action="/test/videos" method="POST" id="ajax-video-uploader-form">
+  
+  <div class="form-group row">
+    <label for="video[title]" class="col-sm-2 col-form-label">Title</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="ajax-video[title]" name="title" placeholder="Title">
+    </div>
+  </div>
+  
+  
+  <div class="form-group row">
+    <label for="video[url]" class="col-sm-2 col-form-label">URL</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="ajax-video[url]" name="url" placeholder="URL">
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <label for="video[description]" class="col-sm-2 col-form-label">Description</label>
+    <div class="col-sm-10">
+    <textarea class="form-control" id="ajax-video[description]" name="description" rows="3" aria-describedby="descriptionHelpBlock"></textarea>
+     <small id="ajax-descriptionHelpBlock" class="form-text text-muted">
+      Write a brief description about the file you are uploading.
+    </small>
+    </div>
+  </div>
+  
+    <div class="form-group row">
+    <label for="video[topic]" class="col-sm-2 col-form-label">Topic</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="ajax-video[topic]" name="video[topic]" placeholder="Topic">
+       <small id="ajax-descriptionHelpBlock" class="form-text text-muted">
+        Provide details of the topics covered by the file being uploaded.  
+       </small>
+    </div>
+  </div>
+  
+<!------------------------------------------Exam--------------------------------->
+  <div class="form-group row">
+    <label class="col-sm-2" for="videoExamFormControlSelect">Applicable Exam:</label>
+    <select class="form-control col-sm-4" id="ajax-videoExamFormControlSelect" name="video[exam]">
+      <option disabled selected>Choose Exam..</option>
+      <option value="CA Final(New)">CA Final(New)</option>
+      <option value="CA Final(Old)">CA Final(Old)</option>
+      <option value="CA Intermediate(New)">CA Intermediate(New)</option>
+      <option value="CA IPCC(Old)">CA IPCC(Old)</option>
+      <option value="CA Foundation(New)">CA Foundation(New)</option>
+      <option value="General">General</option>
+    </select>
+    </div>
+
+   <!------------------------------------------------------Attempt Checkboxes--------------------------------------------------------->
+  <div class="form-group row">
+    <label class="col-sm-2" for="videoAttemptFormControlSelect">Applicable Attempt:</label>
+    <select class="form-control col-sm-4" id="ajax-videoAttemptFormControlSelect" name="video[attempt]">
+      <option value="Nov 2019">Nov 2019</option>
+      <option value="May 2020">May 2020</option>
+      <option value="Nov 2020">Nov 2020</option>
+      <option value="May 2021">May 2021</option>
+      <option value="Nov 2021">Nov 2021</option>
+      <!--<option value="General">General</option>-->
+    </select>
+ </div>
+<!------------------------------------------------------Subject SelectBoxes - CA Final(NEW)--------------------------------------------------------->
+<div class="form-group row">
+    <label class="col-md-2" id="ajax-videoSubjectsFormControlSelectLabel" for="videoSubjectsFormControlSelect">Subject:</label>
+    <select class="form-control col-md-3 mr-2 mb-3" id="ajax-videoSubjectsFormControlSelect1" name="video[subject]" disabled="true">
+          <option disabled selected>CA Final (New)</option>
+          <option value="P1: Financial Reporting">P1: Financial Reporting</option>
+          <option value="P2: Strategic Financial Management">P2: Strategic Financial Management</option>
+          <option value="P3: Advanced Auditing and Professional Ethics">P3: Advanced Auditing and Professional Ethics</option>
+          <option value="P4: Corporate & Economic Laws">P4: Corporate & Economic Laws</option>
+          <option value="P5: Strategic Cost Management and Performance Evaluation">P5: Strategic Cost Management and Performance Evaluation</option>
+          <option value="P6A: Risk Management">P6A: Risk Management</option>
+          <option value="P6B: Financial Services & Capital Markets">P6B: Financial Services & Capital Markets</option>
+          <option value="P6C: International Taxation">P6C: International Taxation</option>
+          <option value="P6D: Economic Laws">P6D: Economic Laws</option>
+          <option value="P6E: Global Financial Reporting Standards">P6E: Global Financial Reporting Standards</option>
+          <option value="P6F: Multi-disciplinary Case Study">P6F: Multi-disciplinary Case Study</option>
+          <option value="P7: Direct Tax Laws & International Taxation">P7: Direct Tax Laws & International Taxation</option>
+          <option value="P8: Indirect Tax Laws">P8: Indirect Tax Laws</option>
+          <option value="General">General</option>
+    </select>
+    
+   <select class="form-control col-md-3 mr-2 mb-3" id="ajax-videoSubjectsFormControlSelect4" name="video[subject]" disabled="true">
+        <option disabled selected>CA Final(Old)</option>
+        <option value="P1: Financial Reporting">P1: Financial Reporting</option>
+        <option value="P2: Strategic Financial Management">P2: Strategic Financial Management</option>
+        <option value="P3: Advanced Auditing and Professional Ethics">P3: Advanced Auditing and Professional Ethics</option>
+        <option value="P4: Corporate and Allied Laws">P4A: Corporate and Allied Laws</option>
+        <option value="P5: Advanced Management Accounting">P5: Advanced Management Accounting</option>
+        <option value="P6: Information Systems Control and Audit">P6: Information Systems Control and Audit</option>
+        <option value="P7: Direct Tax Laws">P7: Direct Tax Laws</option>
+        <option value="P8:  Indirect Tax Laws">P8:  Indirect Tax Laws</option>
+        <option value="General">General</option>
+    </select>
+    
+    <select class="form-control col-md-3 mr-2 mb-3" id="ajax-videoSubjectsFormControlSelect2" name="video[subject]" disabled="true">
+          <option disabled selected>CA Intermediate(New)</option>
+          <option value="P1: Accounting">P1: Accounting</option>
+          <option value="P2: Corporate & Other Law">P2: Corporate & Other Law</option>
+          <option value="P3: Cost and Management Accounting">P3: Cost and Management Accounting</option>
+          <option value="P4A: Income-tax law">P4A: Income-tax law</option>
+          <option value="P4B: Indirect Taxes">P4B: Indirect Taxes</option>
+          <option value="P5: Advanced Accounting">P5: Advanced Accounting</option>
+          <option value="P6: Auditing and Assurance">P6: Auditing and Assurance</option>
+          <option value="P7A: Enterprise Information Systems">P7A: Enterprise Information Systems</option>
+          <option value="P7B: Strategic Management">P7B: Strategic Management</option>
+          <option value="P8A: Financial Management">P8A: Financial Management</option>
+          <option value="P8B: Economics for Finance">P8B: Economics for Finance</option>
+          <option value="General">General</option>
+    </select>
+    
+    
+    <select class="form-control offset-md-2 col-md-3 mr-2 mb-3" id="ajax-videoSubjectsFormControlSelect5" name="video[subject]" disabled="true">
+          <option disabled selected>CA IPCC(Old)</option>
+          <option value="P1: Accounting">P1: Accounting</option>
+          <option value="P2: Business Laws, Ethics and Communication">P2: Business Laws, Ethics and Communication</option>
+          <option value="P3: Cost Accounting and Financial Management">P3: Cost Accounting and Financial Management</option>
+          <option value="P4: Taxation">P4: Taxation</option>
+          <option value="P5: Advanced Accounting">P5: Advanced Accounting</option>
+          <option value="P6: Risk Management">P6: Risk Management</option>
+          <option value="P7: Information Technology and Strategic Management">P7: Information Technology and Strategic Management</option>
+          <option value="General">General</option>
+    </select>
+    
+    <select class="form-control col-md-3 mr-2 mb-3" id="ajax-videoSubjectsFormControlSelect3" name="video[subject]" disabled="true" margin>
+          <option disabled selected>CA Foundation</option>
+          <option value="P1: Principles and Practice of Accounting">P1: Principles and Practice of Accounting</option>
+          <option value="P2A: Business Laws">P2A: Business Laws</option>
+          <option value="P2B: Business Correspondence and Reporting">P2B: Business Correspondence and Reporting</option>
+          <option value="P3: Business Mathematics and Logical Reasoning & Statistics">P3: Business Mathematics and Logical Reasoning & Statistics</option>
+          <option value="P4I: Business Economics">P4I: Business Economics</option>
+          <option value="P4II: Business and Commercial Knowledge">P4II: Business and Commercial Knowledge</option>
+          <option value="General">General</option>
+    </select>
+  </div>
+      <div class="modal-footer">
+        <div class="video_submit1">
+          <button type="submit" class="btn btn-primary video_submit">Submit</button>
+        </div>
+      </div>
+</form>
+  </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+$("#ajax-videoExamFormControlSelect").on("change", function(){
+        var optionVal_video = $("#ajax-videoExamFormControlSelect option:selected").val();
+        
+        if(optionVal_video == "CA Final(New)"){
+        $('#ajax-videoSubjectsFormControlSelect1').removeAttr("disabled");
+        $('#ajax-videoSubjectsFormControlSelect2').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect3').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect4').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect5').attr("disabled", "true");
+        } else if (optionVal_video == "CA Intermediate(New)"){
+        $('#ajax-videoSubjectsFormControlSelect1').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect2').removeAttr("disabled");
+        $('#ajax-videoSubjectsFormControlSelect3').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect4').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect5').attr("disabled", "true");
+        } else if (optionVal_video == "CA Foundation(New)"){
+        $('#ajax-videoSubjectsFormControlSelect1').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect2').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect3').removeAttr("disabled");
+        $('#ajax-videoSubjectsFormControlSelect4').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect5').attr("disabled", "true");
+        }  else if (optionVal_video == "CA Final(Old)"){
+        $('#ajax-videoSubjectsFormControlSelect1').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect2').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect3').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect4').removeAttr("disabled");
+        $('#ajax-videoSubjectsFormControlSelect5').attr("disabled", "true");
+        }  else if (optionVal_video == "CA IPCC(Old)"){
+        $('#ajax-videoSubjectsFormControlSelect1').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect2').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect3').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect4').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect5').removeAttr("disabled");
+        } else if (optionVal_video == "General"){
+        $('#ajax-videoSubjectsFormControlSelect1').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect2').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect3').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect4').attr("disabled", "true");
+        $('#ajax-videoSubjectsFormControlSelect5').attr("disabled", "true");
+        } 
+});
+
+$("#ajax-video-uploader-form").submit(function(e){
+    e.preventDefault();
+    var uploadData = $(this).serialize();
+    $.post("/test/videos", uploadData, function(data){
+        $("#exampleModalScrollable").modal("toggle");
+        $("#exampleModalScrollable").blur();
+       $("#video-row-append").append(
+            `
+            <div class="col-md-4 card_video pl-0">
+          <div class="card">
+              <div class="embed-responsive embed-responsive-16by9 card-img-top">
+                <iframe width="560" height="315" class="embed-responsive-item" src="${data.url}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            <div class="card-body">
+              <h6 class="card-title">${data.title}</h6>
+              <small class="text-primary">Faculty: <span class="text-capitalize">${data.author}</span></small>
+              <p><small class="card-text"><span class="text-primary">Description:</span> ${data.description}...</small></p>
+              <small class="card-text"><span class="text-primary">Applicable to:</span>${data.exam}</small><br>
+              <small class="card-text"><span class="text-primary">Applicable attempts:</span> ${data.attempt}</small>
+            </div>
+            <!--FOOTER-->
+            <div class="card-footer">
+              <small class="text-muted">Upload: ${data.createdAt}</small> 
+              
+              <!--<button type="button" class="btn btn-primary btn-sm ml-4" data-toggle="modal" data-target="#exampleModal">-->
+              <!--   Edit-->
+              <!--</button>-->
+              <form id="ajax-api-delete-video-form" class="d-inline-block" action="/videos/${data._id}?_method=DELETE" method="POST">
+                  <button type="submit" class="btn btn-danger btn-sm ml-1">Delete</button>
+              </form>
+            </div>
+          </div>
+          </div>
+            `)
+    })
+            
+})
+
+
+</script>
+
+<% include ./partials/footer %>
+
+

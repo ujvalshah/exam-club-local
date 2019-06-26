@@ -1,0 +1,16 @@
+<% include ./partials/header %>
+
+<div class="container">
+<h1>CA Exam Club</h1>
+ <% if(!currentUser){ %>
+ <li><a href="#">You need to sign up!</a></li>
+<% } else { %>
+<li><a href="#">Signed In As <%= currentUser.username %></a></li>
+
+<li>Admin: <%=currentUser.isAdmin%></li>
+<li>Faculty: <%=currentUser.isFaculty%></li>
+<li>Student: <%=currentUser.isStudent%></li>
+<% } %>
+
+</div>
+<% include ./partials/footer %>

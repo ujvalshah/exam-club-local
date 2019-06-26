@@ -1,0 +1,117 @@
+<% include ./partials/header %>
+
+<div class="container">
+
+<div class="container">
+<div class="row mb-2">
+  <div class="col-md-6">
+  <h4 class="d-inline">Document Uploads</h4>    
+<p class="d-inline ml-1">You have uploaded <span class="text-primary"><%=user.downloads.length%></span> <%=user.downloads.length===1 ? "document":"documents"%> until now.</p>  
+  </div>
+  <div class="col-md-6">
+    <p><a href="/downloads/upload" class="btn btn-primary float-right">Upload</a></p>
+  </div>
+</div>
+
+<!-------------------------------------------------------------------------------->
+<!----------------------------Downloads Table------------------------------------->
+<!-------------------------------------------------------------------------------->
+
+<div class="table-responsive mb-5">
+  <table id="container_downloads_dashboard" class="table table-sm table-hover table-striped overflow-auto">
+    <thead>
+        <tr class="table-light">
+            <th class="text-center tdv" scope="col">Sr.No</th>
+            <th class="text-center tdv" scope="col">Date</th>
+            <th class="text-center tdv" scope="col">Author</th>
+            <th class="text-center tdv" scope="col">Title</th>
+            <th class="text-center tdv" scope="col">Exam</th>
+            <th class="text-center tdv" scope="col">Attempt</th>
+            <th class="text-center tdv" scope="col">Subject</th>
+            <th class="text-center tdv" scope="col">Description</th>
+            <th class="text-center tdv" scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+    <%user.downloads.forEach(function(download, index){%>
+      <tr>
+        <th class="align-middle tdv text-center" scope="row"></small><%=index + 1%></small></th> 
+        <td class="align-middle tdv"><small><%=download.date.toDateString()%></small></td>
+        <td class="align-middle tdv" nowrap><img class="rounded-circle" src="https://cdn3.vectorstock.com/i/1000x1000/30/97/flat-business-man-user-profile-avatar-icon-vector-4333097.jpg" width="55" height="55"><small><%=download.author.username%></small></td>
+        <td class="align-middle tdv"><small><%=download.title%></small></td>
+        <td class="align-middle tdv"><small><%=download.exam%></small></td>
+        <td class="align-middle tdv"><small><%=download.attempt%></small></td>
+        <td class="align-middle tdv" width="25%"><small><%=download.subject%></small></td>
+        <td class="align-middle tdv"><small><%-download.description%></small></td>
+        <td class="align-middle tdv">
+          <span class="dropdown">
+            <a href="#" class="pr-2" data-toggle="dropdown" aria-expanded="true"> <i class="fas fa-ellipsis-v"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="/downloads/<%=download.id%>/edit"><i class="far fa-edit fa-xs"></i> Edit Details</a>
+               <div class="dropdown-item"> 
+                <form action="/downloads/<%=download.id%>?_method=DELETE" method="POST">
+                  <button class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i> Delete</button>
+                </form>
+                </div>
+            </div>
+            </span>
+            <%if(download.file[0]){%>
+            <a target="_blank" class="pr-2" href="<%=download.file[0].url%>"> <span><i class="fas fa-file-download"></i></span></a>
+            <%} else {%>
+            <a class="pr-2" href="#"> <span><i class="fas fa-file-download"></i></span></a>
+            <%}%>
+            <a class="pr-2" href=#><span><i class="fas fa-share-alt"></i></span></a>
+        </td>
+      </tr>
+    <%})%>  
+    </tbody>
+  </table>
+</div>
+
+<!-------------------------------------------------------------------------------->
+<!----------------------------Video Table----------------------------------------->
+<!-------------------------------------------------------------------------------->
+
+
+<h4 class="d-inline">Video Uploads</h4> 
+<p class="d-inline ml-1">You have uploaded <span class="text-primary"><%=user.videos.length%></span> <%=user.videos.length===1 ? "video":"videos"%> until now.</p>
+<div class="container border rounded videobox mt-4">
+    
+<div class="container overflow-auto py-4" id="container_video_dashboard">
+    <div class="row" id="video-row">
+      <%user.videos.forEach(function(video){%>   
+        <div class="col-md-4 card_video">
+          <div class="card">
+              <div class="embed-responsive embed-responsive-16by9 card-img-top">
+                <iframe width="560" height="315" class="embed-responsive-item" src="<%=video.url%>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+          <div class="card-body">
+              <h6 class="card-title"><%=video.title%></h6>
+              <small>Faculty: <span class="text-capitalize"><%=video.author.username%></span></small>
+              <p><small class="card-text"><span class="text-primary">Description:</span> <%-video.description.substring(0, 100) %>...</small></p>
+              <small class="card-text"><span class="text-primary">Applicable to:</span><%=video.exam%> </small> <br>
+              <small class="card-text"><span class="text-primary">Applicable attempts:</span> <%=video.attempt%></small>
+          </div>
+          <div class="card-footer">
+              <small class="text-muted">Upload: <%=video.createdAt.toDateString()%></small> 
+              <a class="btn btn-primary btn-sm ml-4" href="/videos/<%=video._id %>/edit" role="button">Edit</a>
+              <form class="delete-video-form" action="/videos/<%=video._id%>?_method=DELETE" method="POST">
+                  <button type="submit" class="btn btn-danger btn-sm ml-1">Delete</button>
+              </form>
+          </div>
+          </div>
+        </div>
+      <%})%>
+    </div>
+</div>
+</div>
+
+</div>
+
+<script>
+  
+</script>
+<% include ./partials/footer %>
+
+

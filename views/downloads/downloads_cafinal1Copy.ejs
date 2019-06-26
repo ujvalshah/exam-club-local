@@ -1,0 +1,307 @@
+<% include ../partials/header %>
+
+
+<!-------------------------------------------------------------------------------->
+<!----------------------------Downloads Table------------------------------------->
+<!-------------------------------------------------------------------------------->
+
+<div class="container-fluid">
+<p><a href="/downloads/upload" class="btn btn-primary btn-sm float-right d-inline-block mr-3">Upload</a></p>
+
+<div class="container-fluid" id="container_download">
+<h3 class="mb3">Downloads</h3>
+<table id="example" class="table table-striped table-hover" style="width:100%">
+        <thead>
+        <tr>
+                <th></th>
+                <th class="text-center">Sr.No</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Author</th>
+                <th class="text-center">Title</th>
+                <th class="text-center">Exam</th>
+                <th class="text-center">Attempt</th>
+                <th class="text-center">Subject</th>
+                <th class="text-center">_id</th>
+                <th class="text-center">Download</th>
+            </tr>
+ </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th class="text-center">Sr.No</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Author</th>
+                <th class="text-center">Title</th>
+                <th class="text-center">Exam</th>
+                <th class="text-center">Attempt</th>
+                <th class="text-center">Subject</th>
+                <th class="text-center">_id</th>
+                <th class="text-center">Download</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+</div>
+
+<script>
+
+function format (d) {
+    // `d` is the original data object for the row
+    return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+        '<tr>'+
+            '<td class="font-weight-bold">Description:</td>'+
+            '<td><small>'+d.description+'</small></td>'+
+        '</tr>'+
+        // '<tr>'+
+        //     '<td class="font-weight-bold">Title:</td>'+
+        //     '<td><small>'+d.title+'</small></td>'+
+        // '</tr>'+
+        // '<tr>'+
+        //     '<td class="font-weight-bold">Extra info:</td>'+
+        //     '<td><small>And any further details here (images etc)...</small></td>'+
+        // '</tr>'+
+    '</table>';
+}
+
+    $(document).ready(function() {
+        
+    $('#example tfoot th').each( function () {
+    var title = $(this).text();
+    $(this).html( '<input type="text" class="form-control form-control-sm search-table-download" placeholder="Search '+title+'" />' );
+    } );
+     $.fn.dataTable.moment( 'LL',  "en-gb" );
+    //Datatable
+    var t = $('#example').DataTable( 
+              
+    {
+        "columnDefs": [ 
+        {
+    	 targets: -1,
+    	 orderable: false,
+    	 "className": "align-middle text-center",
+    	 render: function(data, type, row, full, meta) {
+	     return `
+	      <span class="dropdown">
+            <a href="#" class="pr-2" data-toggle="dropdown" aria-expanded="true"> <i class="fas fa-ellipsis-v"></i></a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="/downloads//edit"><i class="far fa-edit fa-xs"></i> Edit Details</a>
+               <div class="dropdown-item"> 
+                  <button class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i> Delete</button>
+                </div>
+            </div>
+            </span>
+	     <a href="`+data+`"><span class="pr-2"><i class="fas fa-file-download"></i></span></a></a>
+	     
+	     <form id="bookmark-download-ajax-form" class="d-inline-block m-0 p-0" action="/user/downloads/`+ row._id +`?_method=PUT" method="POST">
+                  <button type="submit" class="btn border-0 bg-transparent p-0 m-0" id="bookmark-download-ajax-form"><i class="fas fa-bookmark"></i></button>
+        </form>
+	     <a href="#" title="Share"><span class="pr-2"><i class="fas fa-share-alt"></i></span></a>` 
+        },
+        },
+        {
+            "targets": 0,
+            "searchable": false,
+            "orderable": false,
+            "width": "3%",
+             "render": function(data, type, full, meta){
+              return '<span class=""> <i class="fas fa-plus-circle"></i> </span>'   
+            },
+        },        
+        {
+            "targets": 1,
+            "searchable": false,
+            "orderable": false,
+            "width": "3%",
+            className: "align-middle text-center",
+            //  "render": function(data, type, full, meta){
+            //   return '<span class="text-center">' + data + '</span>'   
+            // },
+        },
+        {
+			 targets: 2,
+			 className: "align-middle text-center",
+			 render: function(data, type, full, meta) {
+			     const months = ["Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+			     let current_datetime = new Date(data);
+                 let formatted_date = current_datetime.getDate() + "-" + months[current_datetime.getMonth()] + "-" + current_datetime.getFullYear();
+			     let finalData = moment(formatted_date).format("DD-MMM-YYYY");
+			     //let finalData = d.toDateString();
+             return '<small>'+ finalData +'</small>';
+		     },
+        },        
+        {
+			 targets: 3,
+			 className: "align-middle text-center",
+			 render: function(data, type, full, meta) {
+             return '<span class="text-capitalize"><small>'+ data +'</small></span>';
+		     },
+        },
+        {
+			 targets: 4,
+			 className: "align-middle text-center",
+			 render: function(data, type, full, meta) {
+             return '<small>'+ data +'</small>';
+		     },
+        },        
+        {
+			 targets: 5,
+			 className: "align-middle text-center",
+			 render: function(data, type, full, meta) {
+				var exams = {
+					"CA Final(New)": {'title': "CA Final(New)", 'class': 'badge-success'},
+					"CA Final(Old)": {'title': "CA Final(Old)", 'class': 'badge-danger'},
+					"CA Intermediate(New)": {'title': "CA Intermediate(New)", 'class': 'badge-warning'},
+				    "CA IPCC(Old)": {'title': "CA IPCC(Old)", 'class': 'badge-info'},
+					"CA Foundation(New)": {'title': "CA Foundation(New)", 'class': 'badge-secondary'},
+				};
+				var dataExam = data.split(","); 
+				var txtExam = '';
+                dataExam.forEach(function(item) {
+                    if (txtExam.length > 0) {
+                      txtExam += " "
+                    }
+                    txtExam += '<span class="badge ' + exams[item].class + ' ">' + exams[item].title + '</span>';
+                });
+                return txtExam;
+				
+				if (typeof exams[data] === 'undefined') {
+					return data;
+				}
+			},
+        },        
+		{
+			targets: 6,
+			className: "align-middle text-center",
+			render: function(data, type, full, meta) {
+				var attempts = {
+					"Nov 2019": {'title': "Nov 2019", 'class': 'badge-primary'},
+					"May 2020": {'title': "May 2020", 'class': 'badge-danger'},
+					"Nov 2020": {'title': "Nov 2020", 'class': 'badge-warning'},
+				    "May 2021": {'title': "May 2021", 'class': 'badge-success'},
+					"Nov 2021": {'title': "Nov 2021", 'class': 'badge-info'},
+				};
+				var datas = data.split(","); 
+				var txt = '';
+                datas.forEach(function(item) {
+                    if (txt.length > 0) {
+                      txt += " "
+                    }
+                    txt += '<span class="badge badge-pill ' + attempts[item].class + ' ">' + attempts[item].title + '</span>';
+                });
+                return txt;
+				
+				if (typeof attempts[data] === 'undefined') {
+					return data;
+				}
+			},
+		},
+        {
+    		 targets: 7,
+    		 className: "align-middle",
+    		 render: function(data, type, full, meta) {
+             return '<small>'+ data +'</small>';
+	            },
+        },
+        { "visible": false,  "targets": [ 8 ] },
+    //     {
+    // 		 targets: 8,
+    // 		 className: "align-middle text-center",
+    // 		 render: function(data, type, full, meta) {
+    //          return '<small>'+ data +'</small>';
+	   //         },
+    //     },
+	],
+        "order": [[ 1, 'dsc' ]],
+        "scrollY": 200,
+        "scrollX": true,
+        "ajax": {
+            "url": "https://caexamclub-ujshah.c9users.io/api/downloads/",
+            "dataSrc": ''
+        },
+         
+        "columns":[
+                    {
+        "className":      'details-control text-center align-middle',
+        "orderable":      false,
+        "data":           null,
+        "defaultContent": ''
+                        },
+        {data: 'date'},
+        {data: 'date'},
+        {data: 'author.username'},
+        {data: 'title'},
+        {data: 'exam[,]'},
+        {data: 'attempt[,]'},
+        {data: 'subject[,]'},
+        {data: '_id'},
+        {data: 'file.0.url',  responsivePriority: -1},
+    ]});
+   t.on( 'order.dt search.dt', function () {
+        t.column(1, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = '<span><small>' + (i+1) +'</small></span>';
+        });
+    }).draw();
+    
+    // Apply the search
+    t.columns().every( function () {
+        var that = this;
+        $( 'input' , this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+    
+    //alert("connected");
+   // Add event listener for opening and closing details
+    $('#example tbody').on('click', 'td.details-control', function () {
+        var tr = $(this).closest('tr');
+        var row = t.row( tr );
+ 
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+           $('td.details-control').html('<i class="fas fa-plus-circle"></i>');
+        }
+        else {
+            // Open this row
+            row.child( format(row.data()) ).show();
+            tr.addClass('shown');
+            $('tr.shown td.details-control').html('<i class="fas fa-minus-circle"></i>');
+        }
+    });
+    
+
+    $("td.details-control").on("click", function(){
+        $(this).html('<i class="fas fa-minus-circle"></i>');
+    });
+    
+  $("shown td.details-control").on("click", function(){
+      $(this).html('<i class="fas fa-minus-circle"></i>');
+  });
+
+
+});
+
+
+</script>
+
+<% include ../partials/footer %>
+
+
+<!--For Downloads API-->
+      <!--"ajax": {-->
+      <!--      "url": "https://caexamclub-ujshah.c9users.io/api/downloads",-->
+      <!--      "dataSrc": ""-->
+      <!--  },-->
+      <!--  "columns":[-->
+      <!--  { "data": 'title'},-->
+      <!--  { "data": 'description'},-->
+      <!--  { "data": 'subject[0]'},-->
+      <!--  { "data": 'createdAt'},-->
+      <!--  { "data": 'topic'},-->
+      <!--  { "data": 'file[0].url'}-->

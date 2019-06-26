@@ -1,0 +1,18 @@
+<% include ./partials/header %>
+<div class="container">
+    
+    <h1 class="mb-3">Forgot Password</h1>
+<form action="/forgot-password?_method=PUT" method="POST">
+  <div class="form-group">
+    <label for="fp-email"  class="col-sm-4 col-form-label pl-0">Email address</label>
+    <input type="email" class="form-control col-sm-4" id="fp-email" name="email" aria-describedby="emailHelp" placeholder="Enter email" autofocus>
+  </div>
+  <small id="fp-email" class="form-text text-muted mb-3">
+    Enter you registered email address on which we will send you a password reset link.
+</small>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+    
+    
+</div>

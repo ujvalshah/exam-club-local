@@ -1,0 +1,290 @@
+<% include ../partials/header %>
+
+
+<!--------------------------Teacher's Profile CREATE Form(GET)------------------------>
+<div class="container">
+<h2 class="pb-3">Create your Faculty Profile!</h2>
+
+<form action="/teachers" method="POST">
+  <div class="form-group row">
+    <label for="teacher[firstName]" class="col-sm-2 col-form-label">First Name</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="teacher[firstName]" name="teacher[firstName]" placeholder="First Name">
+    </div>
+    
+    <label for="teacher[lastName]" class="col-sm-2 col-form-label text-right">Last Name</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="teacher[lastName]" name="teacher[lastName]" placeholder="Last Name">
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <label for="teacher[mobile]" class="col-sm-2 col-form-label">Mobile</label>
+    <div class="col-sm-4">
+      <input type="number" class="form-control" id="teacher[mobile]" name="teacher[mobile]" placeholder="Mobile">
+    </div>
+
+    <label for="teacher[image]" class="col-sm-2 col-form-label text-right">Image</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="teacher[image]" name ="teacher[image]" accept="image/*" placeholder="Image url..">
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <label for="teacher[description]" class="col-sm-2 col-form-label">Description</label>
+    <div class="col-sm-10">
+    <textarea class="form-control" id="teacher[description]" name="teacher[description]" rows="3" aria-describedby="descriptionHelpBlock"></textarea>
+     <small id="descriptionHelpBlock" class="form-text text-muted">
+      Write a brief description/profile about yourself which will be showcased on your profile page.
+    </small>
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <label for="teacher[address]" class="col-sm-2 col-form-label">Address</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="teacher[address]" name="teacher[address]" placeholder="Address">
+    </div>
+  </div>
+  
+  
+  <div class="form-group row">
+    <label for="teacher[city]" class="col-sm-2 col-form-label">City</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="teacher[city]" name="teacher[city]" placeholder="City">
+    </div>
+
+    <label for="teacher[state]" class="col-sm-2 col-form-label text-right">State</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="teacher[state]" name="teacher[state]" placeholder="State">
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <label for="teacher[pincode]" class="col-sm-2 col-form-label">Pincode</label>
+    <div class="col-sm-4">
+      <input type="number" class="form-control" id="teacher[pincode]" name="teacher[pincode]" placeholder="Pincode">
+    </div>
+  </div>
+  
+<!------------------------------------------------------Subject Checkboxes - CA Final(NEW)--------------------------------------------------------->
+
+  
+  <fieldset class="form-group">
+    <div class="row">
+      <legend class="col-form-label col-sm-2 pt-0">Subjects</legend>
+      <div class="col-sm-3">
+        <legend class="col-form-label pt-0 font-weight-bold">CA Final(New)</legend>
+        <div class="caFinal_cbox">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox1" value="CA Final - P1: Financial Reporting">
+              <label class="form-check-label" for="gridcheckbox1">
+                P1 : Financial Reporting
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox2" value="CA Final - P2: Strategic Financial Management">
+              <label class="form-check-label" for="gridcheckbox2">
+                P2 : Strategic Financial Management
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox3" value="CA Final - P3: Advanced Auditing and Professional Ethics">
+              <label class="form-check-label" for="gridcheckbox3">
+                P3 : Advanced Auditing and Professional Ethics
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox4" value="CA Final - P4: Corporate & Economic Laws">
+              <label class="form-check-label" for="gridcheckbox4">
+                P4 : Corporate & Economic Laws
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox5" value="CA Final - P5: Strategic Cost Management and Performance Evaluation">
+              <label class="form-check-label" for="gridcheckbox5">
+                P5 : Strategic Cost Management and Performance Evaluation
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox6A" value="CA Final - P6A: Risk Management">
+              <label class="form-check-label " for="gridcheckbox6A">
+                P6A : Risk Management
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox6B" value=" CA Final - P6B: Financial Services & Capital Markets">
+              <label class="form-check-label " for="gridcheckbox6B">
+                P6B : Financial Services & Capital Markets
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox6C" value="CA Final - P6C: International Taxation">
+              <label class="form-check-label " for="gridcheckbox6C">
+                P6C : International Taxation
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox6D" value="CA Final - P6D: Economic Laws">
+              <label class="form-check-label " for="gridcheckbox6D">
+                P6D : Economic Laws
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox6E" value="CA Final - P6E: Global Financial Reporting Standards">
+              <label class="form-check-label " for="gridcheckbox6E">
+                P6E : Global Financial Reporting Standards
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox6F" value="CA Final - P6F: Multi-disciplinary Case Study">
+              <label class="form-check-label " for="gridcheckbox6F">
+                P6F : Multi-disciplinary Case Study
+              </label>
+            </div>
+            
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox7" value="CA Final - P7: Direct Tax Laws & International Taxation">
+              <label class="form-check-label" for="gridcheckbox7">
+                P7 : Direct Tax Laws & International Taxation
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox8" value="CA Final - P8: Indirect Tax Laws">
+              <label class="form-check-label" for="gridcheckbox8">
+                P8 : Indirect Tax Laws
+              </label>
+            </div>
+          </div>
+          </div>
+          
+<!--------------------------Subject Checkboxes - CA Intermediate(NEW)------------------------>
+            <div class="col-sm-3">
+            <legend class="col-form-label pt-0 font-weight-bold">CA Intermediate(New)</legend>
+            <div class="caintermediate_cbox">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox1" value="CA Intermediate - P1: Accounting">
+              <label class="form-check-label" for="gridcheckbox1">
+                P1 : Accounting
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox2" value="CA Intermediate - P2: Corporate & Other Law">
+              <label class="form-check-label" for="gridcheckbox2">
+                P2 : Corporate & Other Law
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox3" value="CA Intermediate - P3: Cost and Management Accounting">
+              <label class="form-check-label" for="gridcheckbox3">
+                P3 : Cost and Management Accounting
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox4" value="CA Intermediate - P4A: Income-tax law">
+              <label class="form-check-label" for="gridcheckbox4">
+                P4A : Income-tax law
+              </label>
+            </div>
+                <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox4" value="CA Intermediate - P4B: Indirect Taxes">
+              <label class="form-check-label" for="gridcheckbox4">
+                P4B : Indirect Taxes
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox5" value="CA Intermediate - P5: Advanced Accounting">
+              <label class="form-check-label" for="gridcheckbox5">
+                P5 : Advanced Accounting
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox6" value="CA Intermediate - P6: Auditing and Assurance">
+              <label class="form-check-label" for="gridcheckbox6">
+                P6 : Auditing and Assurance
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox7" value="CA Intermediate - P7A: Enterprise Information Systems">
+              <label class="form-check-label" for="gridcheckbox7">
+                P7A : Enterprise Information Systems
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox7" value="CA Intermediate - P7B: Strategic Management">
+              <label class="form-check-label" for="gridcheckbox7">
+                P7B : Strategic Management
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox8" value="CA Intermediate - P8A: Financial Management">
+              <label class="form-check-label" for="gridcheckbox8">
+                P8A : Financial Management
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox8" value="CA Intermediate - P8B: Economics for Financet">
+              <label class="form-check-label" for="gridcheckbox8">
+                P8A : Economics for Finance
+              </label>
+            </div>
+          </div>
+      </div>
+   
+     <!--------------------------Subject Checkboxes - CA Foundation(NEW)------------------------>
+
+    <div class="col-sm-3">
+        <legend class="col-form-label pt-0 font-weight-bold">CA Foundation(New)</legend>
+        <div class="cafoundation_cbox">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox1" value="CA Foundation - P1: Principles and Practice of Accounting">
+              <label class="form-check-label" for="gridcheckbox1">
+                P1 : Principles and Practice of Accounting
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox2" value="CA Foundation - P2A: Business Laws">
+              <label class="form-check-label" for="gridcheckbox2">
+                P2A : Business Laws
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox3" value="CA Foundation - P2B: Business Correspondence and Reporting">
+              <label class="form-check-label" for="gridcheckbox3">
+                P2B : Business Correspondence and Reporting
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox4" value="CA Foundation - P3: Business Mathematics and Logical Reasoning & Statistics">
+              <label class="form-check-label" for="gridcheckbox4">
+                P3 : Business Mathematics and Logical Reasoning & Statistics
+              </label>
+            </div>
+                <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox4" value="CA Foundation - P4I: Business Economics">
+              <label class="form-check-label" for="gridcheckbox4">
+                P4I : Business Economics
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="teacher[subject]" id="gridcheckbox5" value="CA Foundation - P4II: Business and Commercial Knowledgeg">
+              <label class="form-check-label" for="gridcheckbox5">
+                P4II : Business and Commercial Knowledge
+              </label>
+            </div>
+          </div>
+      </div>
+    </div>
+  </fieldset>
+  
+  <div class="form-group row">
+    <div class="col-sm-12">
+      <div class="teacher_submit1">
+        <button type="submit" class="btn btn-primary teacher_submit">Submit</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+</div>
+<% include ../partials/footer %>

@@ -1,0 +1,530 @@
+<% include ../partials/header %>
+<!--------------------------video - Upload - Edit Form(Put)------------------------>
+<div class="container">
+    <h2 class="pb-3">Update Video Details</h2>
+
+<form action="/videos/<%=video._id%>?_method=PUT" method="POST">
+  
+  <div class="form-group row">
+ <label for="video[author]_update" class="col-sm-2 col-form-label">Author</label>
+  <div class="col-sm-4">
+    <% if(!currentUser.isAdmin){%>
+    <input type="text" class="form-control" id="video[author]_update" name="video[author][username]" value="<%=currentUser.username%>" readonly>
+    <%} else if (currentUser.isAdmin) { %>
+    <input type="text" class="form-control" id="video[author]_update" name="video[author][username]" value="<%=video.author.username%>">
+    <%}%>
+  </div>
+  </div>
+  
+  <div class="form-group row">
+    <label for="video[title]" class="col-sm-2 col-form-label">Title</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="video[title]" name="video[title]" value="<%=video.title%>">
+    </div>
+  </div>
+  
+  
+  <div class="form-group row">
+    <label for="video[url]" class="col-sm-2 col-form-label">URL</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="video[url]" name="url" value="<%=video.url%>">
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <label for="video[description]" class="col-sm-2 col-form-label">Description</label>
+    <div class="col-sm-10">
+    <textarea class="form-control" id="video[description]" name="video[description]" rows="3" aria-describedby="descriptionHelpBlock"><%=video.description%></textarea>
+     <small id="descriptionHelpBlock" class="form-text text-muted">
+      Write a brief description about the file you are uploading.
+    </small>
+    </div>
+  </div>
+  
+    <div class="form-group row">
+    <label for="video[topic]" class="col-sm-2 col-form-label">Topic</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="video[topic]" name="video[topic]" value="<%=video.topic%>">
+       <small id="descriptionHelpBlock" class="form-text text-muted">
+        Provide details of the topics covered by the file being uploaded.  
+       </small>
+    </div>
+  </div>
+  
+  
+   <!------------------------------------------Exam--------------------------------->
+  <div class="form-group row">
+    <label class="col-sm-2" for="videoExamFormControlSelect_update">Applicable Exam:</label>
+    <select class="form-control col-sm-4" id="videoExamFormControlSelect_update" name="video[exam]">
+      <option value="CA Final(New)" <%= video.exam.includes("CA Final(New)") ? "selected" : "" %>>CA Final(New)</option>
+      <option value="CA Final(Old)" <%= video.exam.includes("CA Final(Old)") ? "selected" : "" %>>CA Final(Old)</option>
+      <option value="CA Intermediate(New)" <%= video.exam.includes("CA Intermediate(New)") ? "selected" : "" %>>CA Intermediate(New)</option>
+      <option value="CA IPCC(Old)" <%= video.exam.includes("CA IPCC(Old)") ? "selected" : "" %>>CA IPCC(Old)</option>
+      <option value="CA Foundation(New)" <%= video.exam.includes("CA Foundation(New)") ? "selected" : "" %>>CA Foundation(New)</option>
+      <option value="General" <%= video.exam.includes("General") ? "selected" : "" %>>General</option>
+    </select>
+  </div>
+  
+  <!-----------------------------------------------------------Exam Checkboxes------------------------------------------------------------->
+
+  <!--<fieldset class="form-group">-->
+  <!--  <div class="row">-->
+  <!--    <legend class="col-form-label col-sm-2 pt-0">Applicable to Exams:-</legend>-->
+  <!--    <div class="col-sm-3">-->
+  <!--      <div class="video_attempt_checkbox">-->
+  <!--          <div class="form-check">-->
+  <!--            <input class="form-check-input" type="checkbox" name="video[exam]" id="videocheckbox1" value="CA Final(New)" <%= video.exam.includes("CA Final(New)") ? "checked" : "" %>>-->
+  <!--            <label class="form-check-label" for="videocheckbox1">-->
+  <!--              CA Final(New)-->
+  <!--            </label>-->
+  <!--          </div>-->
+  <!--          <div class="form-check">-->
+  <!--            <input class="form-check-input" type="checkbox" name="video[exam]" id="videocheckbox2" value="CA Final(Old)" <%=video.exam.includes("CA Final(Old)") ? "checked" : "" %>>-->
+  <!--            <label class="form-check-label" for="videocheckbox2">-->
+  <!--              CA Final(Old)-->
+  <!--            </label>-->
+  <!--          </div>-->
+  <!--          <div class="form-check">-->
+  <!--            <input class="form-check-input" type="checkbox" name="video[exam]" id="videocheckbox3" value="CA Intermediate(New)" <%=video.exam.includes("CA Intermediate(New)") ? "checked" : "" %>>-->
+  <!--            <label class="form-check-label" for="videocheckbox3">-->
+  <!--              CA Intermediate(New)-->
+  <!--            </label>-->
+  <!--          </div>-->
+  <!--          <div class="form-check">-->
+  <!--            <input class="form-check-input" type="checkbox" name="video[exam]" id="videocheckbox4" value="CA IPCC(Old)" <%=video.exam.includes("CA IPCC(Old)") ? "checked" : "" %>>-->
+  <!--            <label class="form-check-label" for="videocheckbox4">-->
+  <!--              CA IPCC(Old)-->
+  <!--            </label>-->
+  <!--          </div>-->
+  <!--          <div class="form-check">-->
+  <!--            <input class="form-check-input" type="checkbox" name="video[exam]" id="videocheckbox5" value="CA Foundation(New)" <%=video.exam.includes("CA Foundation(New)") ? "checked" : "" %>>-->
+  <!--            <label class="form-check-label" for="videocheckbox5">-->
+  <!--              CA Foundation(New)-->
+  <!--            </label>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--        </div>-->
+  <!--        </div>-->
+  <!--        </fieldset>-->
+          
+          
+   <!------------------------------------------Attempts--------------------------------->
+  <div class="form-group row">
+    <label class="col-sm-2" for="videoAttemptFormControlSelect">Applicable Attempt:</label>
+    <select class="form-control col-sm-4" id="videoAttemptFormControlSelect" name="video[attempt]">
+      <option value="Nov 2019" <%= video.attempt.includes("Nov 2019") ? "selected" : "" %>>Nov 2019</option>
+      <option value="May 2020" <%= video.attempt.includes("May 2020") ? "selected" : "" %>>May 2020</option>
+      <option value="Nov 2020" <%= video.attempt.includes("Nov 2020") ? "selected" : "" %>>Nov 2020</option>
+      <option value="May 2021" <%= video.attempt.includes("May 2021") ? "selected" : "" %>>May 2021</option>
+      <option value="Nov 2021" <%= video.attempt.includes("Nov 2021") ? "selected" : "" %>>Nov 2021</option>
+      <!--<option value="General" <%= video.attempt.includes("General") ? "selected" : "" %>>General</option>-->
+    </select>
+  </div>
+   <!------------------------------------------------------Attempt Checkboxes--------------------------------------------------------->
+
+  <!--<fieldset class="form-group">-->
+  <!--  <div class="row">-->
+  <!--    <legend class="col-form-label col-sm-2 pt-0">Applicable to Attempts:-</legend>-->
+  <!--    <div class="col-sm-3">-->
+  <!--      <div class="video_attempt_checkbox">-->
+  <!--          <div class="form-check">-->
+  <!--            <input class="form-check-input" type="checkbox" name="video[attempt]" id="videocheckbox1" value="Nov 2019" <%=video.attempt.includes("Nov 2019") ? "checked" : "" %>>-->
+  <!--            <label class="form-check-label" for="videocheckbox1">-->
+  <!--              Nov 2019-->
+  <!--            </label>-->
+  <!--          </div>-->
+  <!--          <div class="form-check">-->
+  <!--            <input class="form-check-input" type="checkbox" name="video[attempt]" id="videocheckbox2" value="May 2020" <%=video.attempt.includes("May 2020") ? "checked" : "" %>>-->
+  <!--            <label class="form-check-label" for="videocheckbox2">-->
+  <!--              May 2020-->
+  <!--            </label>-->
+  <!--          </div>-->
+  <!--          <div class="form-check">-->
+  <!--            <input class="form-check-input" type="checkbox" name="video[attempt]" id="videocheckbox3" value="Nov 2020" <%=video.attempt.includes("Nov 2020") ? "checked" : "" %>>-->
+  <!--            <label class="form-check-label" for="videocheckbox3">-->
+  <!--              Nov 2020-->
+  <!--            </label>-->
+  <!--          </div>-->
+  <!--          <div class="form-check">-->
+  <!--            <input class="form-check-input" type="checkbox" name="video[attempt]" id="videocheckbox4" value="May 2021" <%=video.attempt.includes("May 2021") ? "checked" : "" %>>-->
+  <!--            <label class="form-check-label" for="videocheckbox4">-->
+  <!--              May 2021-->
+  <!--            </label>-->
+  <!--          </div>-->
+  <!--          <div class="form-check">-->
+  <!--            <input class="form-check-input" type="checkbox" name="video[attempt]" id="videocheckbox5" value="Nov 2021" <%=video.attempt.includes("Nov 2021") ? "checked" : "" %>>-->
+  <!--            <label class="form-check-label" for="videocheckbox5">-->
+  <!--              Nov 2021-->
+  <!--            </label>-->
+  <!--         </div>-->
+  <!--        </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <!--</fieldset>-->
+
+  
+  
+  <!------------------------------------------------------------------Subjects--------------------------------------------------------------------------->
+ <div class="form-group row">
+    <label class="col-md-2" id="videoSubjectsFormControlSelectLabel_update" for="videoSubjectsFormControlSelect">Subject:</label>
+    <select class="form-control col-md-3 mr-2 mb-3" id="videoSubjectsFormControlSelect1_update" name="video[subject]"<%= video.exam.includes("CA Final(New)") ? "" : "disabled" %>>
+          <option disabled selected>CA Final (New)</option>
+          <option value="P1: Financial Reporting" <%= video.subject.includes("P1: Financial Reporting") ? "selected" : "" %>>P1: Financial Reporting</option>
+          <option value="P2: Strategic Financial Management" <%= video.subject.includes("P2: Strategic Financial Management") ? "selected" : "" %>>P2: Strategic Financial Management</option>
+          <option value="P3: Advanced Auditing and Professional Ethics" <%= video.subject.includes("P3: Advanced Auditing and Professional Ethics") ? "selected" : "" %>>P3: Advanced Auditing and Professional Ethics</option>
+          <option value="P4: Corporate & Economic Laws" <%= video.subject.includes("P4: Corporate & Economic Laws") ? "selected" : "" %>>P4: Corporate & Economic Laws</option>
+          <option value="P5: Strategic Cost Management and Performance Evaluation" <%= video.subject.includes("P5: Strategic Cost Management and Performance Evaluation") ? "selected" : "" %>>P5: Strategic Cost Management and Performance Evaluation</option>
+          <option value="P6A: Risk Management" <%= video.subject.includes("P6A: Risk Management") ? "selected" : "" %>>P6A: Risk Management</option>
+          <option value="P6B: Financial Services & Capital Markets" <%= video.subject.includes("P6B: Financial Services & Capital Markets") ? "selected" : "" %>>P6B: Financial Services & Capital Markets</option>
+          <option value="P6C: International Taxation" <%= video.subject.includes("P6C: International Taxation") ? "selected" : "" %>>P6C: International Taxation</option>
+          <option value="P6D: Economic Laws" <%= video.subject.includes("P6D: Economic Laws") ? "selected" : "" %>>P6D: Economic Laws</option>
+          <option value="P6E: Global Financial Reporting Standards" <%= video.subject.includes("P6E: Global Financial Reporting Standards") ? "selected" : "" %>>P6E: Global Financial Reporting Standards</option>
+          <option value="P6F: Multi-disciplinary Case Study" <%= video.subject.includes("P6F: Multi-disciplinary Case Study") ? "selected" : "" %>>P6F: Multi-disciplinary Case Study</option>
+          <option value="P7: Direct Tax Laws & International Taxation" <%= video.subject.includes("P7: Direct Tax Laws & International Taxation") ? "selected" : "" %>>P7: Direct Tax Laws & International Taxation</option>
+          <option value="P8: Indirect Tax Laws" <%= video.subject.includes("P8: Indirect Tax Laws") ? "selected" : "" %>>P8: Indirect Tax Laws</option>
+          <option value="General" <%= video.subject.includes("General") ? "selected" : "" %>>General</option>
+    </select>
+    
+   <select class="form-control col-md-3 mr-2 mb-3" id="videoSubjectsFormControlSelect4_update" name="video[subject]" <%= video.exam.includes("CA Final(Old)") ? "" : "disabled" %>>
+        <option disabled selected>CA Final(Old)</option>
+        <option value="P1: Financial Reporting" <%= video.subject.includes("P1: Financial Reporting") ? "selected" : "" %>>P1: Financial Reporting</option>
+        <option value="P2: Strategic Financial Management" <%= video.subject.includes("P2: Strategic Financial Management") ? "selected" : "" %>>P2: Strategic Financial Management</option>
+        <option value="P3: Advanced Auditing and Professional Ethics" <%= video.subject.includes("P3: Advanced Auditing and Professional Ethics") ? "selected" : "" %>>P3: Advanced Auditing and Professional Ethics</option>
+        <option value="P4: Corporate and Allied Laws" <%= video.subject.includes("P4: Corporate and Allied Laws") ? "selected" : "" %>>P4A: Corporate and Allied Laws</option>
+        <option value="P5: Advanced Management Accounting" <%= video.subject.includes("P5: Advanced Management Accounting") ? "selected" : "" %>>P5: Advanced Management Accounting</option>
+        <option value="P6: Information Systems Control and Audit" <%= video.subject.includes("P6: Information Systems Control and Audit") ? "selected" : "" %>>P6: Information Systems Control and Audit</option>
+        <option value="P7: Direct Tax Laws" <%= video.subject.includes("P7: Direct Tax Laws") ? "selected" : "" %>>P7: Direct Tax Laws</option>
+        <option value="P8:  Indirect Tax Laws" <%= video.subject.includes("P8:  Indirect Tax Laws") ? "selected" : "" %>>P8:  Indirect Tax Laws</option>
+        <option value="General" <%= video.subject.includes("General") ? "selected" : "" %>>General</option>
+    </select>
+    
+    <select class="form-control col-md-3 mr-2 mb-3" id="videoSubjectsFormControlSelect2_update" name="video[subject]" <%= video.exam.includes("CA Intermediate(New)") ? "" : "disabled" %>>
+          <option disabled selected>CA Intermediate(New)</option>
+          <option value="P1: Accounting" <%= video.subject.includes("P1: Accounting") ? "selected" : "" %>>P1: Accounting</option>
+          <option value="P2: Corporate & Other Law" <%= video.subject.includes("P2: Corporate & Other Law") ? "selected" : "" %>>P2: Corporate & Other Law</option>
+          <option value="P3: Cost and Management Accounting" <%= video.subject.includes("P3: Cost and Management Accounting") ? "selected" : "" %>>P3: Cost and Management Accounting</option>
+          <option value="P4A: Income-tax law" <%= video.subject.includes("P4A: Income-tax law") ? "selected" : "" %>>P4A: Income-tax law</option>
+          <option value="P4B: Indirect Taxes" <%= video.subject.includes("P4B: Indirect Taxes") ? "selected" : "" %>>P4B: Indirect Taxes</option>
+          <option value="P5: Advanced Accounting" <%= video.subject.includes("P5: Advanced Accounting") ? "selected" : "" %>>P5: Advanced Accounting</option>
+          <option value="P6: Auditing and Assurance" <%= video.subject.includes("P6: Auditing and Assurance") ? "selected" : "" %>>P6: Auditing and Assurance</option>
+          <option value="P7A: Enterprise Information Systems" <%= video.subject.includes("P7A: Enterprise Information Systems") ? "selected" : "" %>>P7A: Enterprise Information Systems</option>
+          <option value="P7B: Strategic Management" <%= video.subject.includes("P7B: Strategic Management") ? "selected" : "" %>>P7B: Strategic Management</option>
+          <option value="P8A: Financial Management" <%= video.subject.includes("P8A: Financial Management") ? "selected" : "" %>>P8A: Financial Management</option>
+          <option value="P8B: Economics for Finance" <%= video.subject.includes("P8B: Economics for Finance") ? "selected" : "" %>>P8B: Economics for Finance</option>
+          <option value="General" <%= video.subject.includes("General") ? "selected" : "" %>>General</option>
+    </select>
+    
+    
+    <select class="form-control offset-md-2 col-md-3 mr-2 mb-3" id="videoSubjectsFormControlSelect5_update" name="video[subject]" <%= video.exam.includes("CA IPCC(Old)") ? "" : "disabled" %>>
+          <option disabled selected>CA IPCC(Old)</option>
+          <option value="P1: Accounting" <%= video.subject.includes("P1: Accounting") ? "selected" : "" %>>P1: Accounting</option>
+          <option value="P2: Business Laws, Ethics and Communication" <%= video.subject.includes("P2: Business Laws, Ethics and Communication") ? "selected" : "" %>>P2: Business Laws, Ethics and Communication</option>
+          <option value="P3: Cost Accounting and Financial Management" <%= video.subject.includes("P3: Cost Accounting and Financial Management") ? "selected" : "" %>>P3: Cost Accounting and Financial Management</option>
+          <option value="P4: Taxation" <%= video.subject.includes("P4: Taxation") ? "selected" : "" %>>P4: Taxation</option>
+          <option value="P5: Advanced Accounting" <%= video.subject.includes("P5: Advanced Accounting") ? "selected" : "" %>>P5: Advanced Accounting</option>
+          <option value="P6: Risk Management" <%= video.subject.includes("P6: Risk Management") ? "selected" : "" %>>P6: Risk Management</option>
+          <option value="P7: Information Technology and Strategic Management" <%= video.subject.includes("P7: Information Technology and Strategic Management") ? "selected" : "" %>>P7: Information Technology and Strategic Management</option>
+          <option value="General" <%= video.subject.includes("General") ? "selected" : "" %>>General</option>
+    </select>
+    
+    <select class="form-control col-md-3 mr-2 mb-3" id="videoSubjectsFormControlSelect3_update" name="video[subject]"<%= video.exam.includes("CA Foundation(New)") ? "" : "disabled" %>>
+          <option disabled selected>CA Foundation</option>
+          <option value="P1: Principles and Practice of Accounting" <%= video.subject.includes("P1: Principles and Practice of Accounting") ? "selected" : "" %>>P1: Principles and Practice of Accounting</option>
+          <option value="P2A: Business Laws" <%= video.subject.includes("P2A: Business Laws") ? "selected" : "" %>>P2A: Business Laws</option>
+          <option value="P2B: Business Correspondence and Reporting" <%= video.subject.includes("P2B: Business Correspondence and Reporting") ? "selected" : "" %>>P2B: Business Correspondence and Reporting</option>
+          <option value="P3: Business Mathematics and Logical Reasoning & Statistics" <%= video.subject.includes("P3: Business Mathematics and Logical Reasoning & Statistics") ? "selected" : "" %>>P3: Business Mathematics and Logical Reasoning & Statistics</option>
+          <option value="P4I: Business Economics" <%= video.subject.includes("P4I: Business Economics") ? "selected" : "" %>>P4I: Business Economics</option>
+          <option value="P4II: Business and Commercial Knowledge" <%= video.subject.includes("P4II: Business and Commercial Knowledge") ? "selected" : "" %>>P4II: Business and Commercial Knowledge</option>
+          <option value="General">General</option>
+    </select>
+  </div>
+<!------------------------------------------------------Subject Checkboxes - CA Final(NEW)--------------------------------------------------------->
+
+  
+<!--  <fieldset class="form-group">-->
+<!--    <div class="row">-->
+<!--      <legend class="col-form-label col-sm-2 pt-0">Subjects</legend>-->
+<!--      <div class="col-sm-3">-->
+<!--        <legend class="col-form-label pt-0 font-weight-bold">CA Final(New)</legend>-->
+<!--        <div class="caFinal_cbox">-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox1" value="CA Final - P1: Financial Reporting" <%=video.subject.includes("CA Final - P1: Financial Reporting") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox1">-->
+<!--                P1 : Financial Reporting-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox2" value="CA Final - P2: Strategic Financial Management" <%=video.subject.includes("CA Final - P2: Strategic Financial Management") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox2">-->
+<!--                P2 : Strategic Financial Management-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox3" value="CA Final - P3: Advanced Auditing and Professional Ethics" <%=video.subject.includes("CA Final - P3: Advanced Auditing and Professional Ethics0") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox3">-->
+<!--                P3 : Advanced Auditing and Professional Ethics-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox4" value="CA Final - P4: Corporate & Economic Laws"<%=video.subject.includes("CA Final - P4: Corporate & Economic Laws") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox4">-->
+<!--                P4 : Corporate & Economic Laws-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox5" value="CA Final - P5: Strategic Cost Management and Performance Evaluation" <%=video.subject.includes("CA Final - P5: Strategic Cost Management and Performance Evaluation") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox5">-->
+<!--                P5 : Strategic Cost Management and Performance Evaluation-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox6A" value="CA Final - P6A: Risk Management" <%=video.subject.includes("CA Final - P6A: Risk Management") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label " for="gridcheckbox6A">-->
+<!--                P6A : Risk Management-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox6B" value=" CA Final - P6B: Financial Services & Capital Markets" <%=video.subject.includes("CA Final - P6B: Financial Services & Capital Markets") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label " for="gridcheckbox6B">-->
+<!--                P6B : Financial Services & Capital Markets-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox6C" value="CA Final - P6C: International Taxation" <%=video.subject.includes("CA Final - P6C: International Taxation") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label " for="gridcheckbox6C">-->
+<!--                P6C : International Taxation-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox6D" value="CA Final - P6D: Economic Laws" <%=video.subject.includes("CA Final - P6D: Economic Laws") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label " for="gridcheckbox6D">-->
+<!--                P6D : Economic Laws-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox6E" value="CA Final - P6E: Global Financial Reporting Standards" <%=video.subject.includes("CA Final - P6E: Global Financial Reporting Standards") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label " for="gridcheckbox6E">-->
+<!--                P6E : Global Financial Reporting Standards-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox6F" value="CA Final - P6F: Multi-disciplinary Case Study" <%=video.subject.includes("CA Final - P6F: Multi-disciplinary Case Study") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label " for="gridcheckbox6F">-->
+<!--                P6F : Multi-disciplinary Case Study-->
+<!--              </label>-->
+<!--            </div>-->
+            
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox7" value="CA Final - P7: Direct Tax Laws & International Taxation" <%=video.subject.includes("P7: Direct Tax Laws & International Taxation") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox7">-->
+<!--                P7 : Direct Tax Laws & International Taxation-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox8" value="CA Final - P8: Indirect Tax Laws" <%=video.subject.includes("P8: Indirect Tax Laws") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox8">-->
+<!--                P8 : Indirect Tax Laws-->
+<!--              </label>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          </div>-->
+          
+<!--------------------------Subject Checkboxes - CA Intermediate(NEW)------------------------>
+<!--            <div class="col-sm-3">-->
+<!--            <legend class="col-form-label pt-0 font-weight-bold">CA Intermediate(New)</legend>-->
+<!--            <div class="caintermediate_cbox">-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox1" value="CA Intermediate - P1: Accounting" <%=video.subject.includes("CA Intermediate - P1: Accounting") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox1">-->
+<!--                P1 : Accounting-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox2" value="CA Intermediate - P2: Corporate & Other Law" <%=video.subject.includes("CA Intermediate - P2: Corporate & Other Law") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox2">-->
+<!--                P2 : Corporate & Other Law-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox3" value="CA Intermediate - P3: Cost and Management Accounting" <%=video.subject.includes("CA Intermediate - P3: Cost and Management Accounting") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox3">-->
+<!--                P3 : Cost and Management Accounting-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox4" value="CA Intermediate - P4A: Income-tax law" <%=video.subject.includes("CA Intermediate - P4A: Income-tax law") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox4">-->
+<!--                P4A : Income-tax law-->
+<!--              </label>-->
+<!--            </div>-->
+<!--                <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox4" value="CA Intermediate - P4B: Indirect Taxes" <%=video.subject.includes("CA Intermediate - P4B: Indirect Taxe") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox4">-->
+<!--                P4B : Indirect Taxes-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox5" value="CA Intermediate - P5: Advanced Accounting" <%=video.subject.includes("CA Intermediate - P5: Advanced Accounting") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox5">-->
+<!--                P5 : Advanced Accounting-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox6" value="CA Intermediate - P6: Auditing and Assurance" <%=video.subject.includes("CA Intermediate - P6: Auditing and Assurance") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox6">-->
+<!--                P6 : Auditing and Assurance-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox7" value="CA Intermediate - P7A: Enterprise Information Systems" <%=video.subject.includes("CA Intermediate - P7A: Enterprise Information Systems") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox7">-->
+<!--                P7A : Enterprise Information Systems-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox7" value="CA Intermediate - P7B: Strategic Management" <%=video.subject.includes("CA Intermediate - P7B: Strategic Management") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox7">-->
+<!--                P7B : Strategic Management-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox8" value="CA Intermediate - P8A: Financial Management" <%=video.subject.includes("CA Intermediate - P8A: Financial Management") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox8">-->
+<!--                P8A : Financial Management-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox8" value="CA Intermediate - P8B: Economics for Finance" <%=video.subject.includes("CA Intermediate - P8B: Economics for Finance") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox8">-->
+<!--                P8A : Economics for Finance-->
+<!--              </label>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--      </div>-->
+   
+     <!--------------------------Subject Checkboxes - CA Foundation(NEW)------------------------>
+
+<!--    <div class="col-sm-3">-->
+<!--        <legend class="col-form-label pt-0 font-weight-bold">CA Foundation(New)</legend>-->
+<!--        <div class="cafoundation_cbox">-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox1" value="CA Foundation - P1: Principles and Practice of Accounting" <%=video.subject.includes("CA Foundation - P1: Principles and Practice of Accounting") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox1">-->
+<!--                P1 : Principles and Practice of Accounting-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox2" value="CA Foundation - P2A: Business Laws" <%=video.subject.includes("CA Foundation - P2A: Business Laws") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox2">-->
+<!--                P2A : Business Laws-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox3" value="CA Foundation - P2B: Business Correspondence and Reporting" <%=video.subject.includes("CA Foundation - P2B: Business Correspondence and Reporting") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox3">-->
+<!--                P2B : Business Correspondence and Reporting-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox4" value="CA Foundation - P3: Business Mathematics and Logical Reasoning & Statistics" <%=video.subject.includes("P3: Business Mathematics and Logical Reasoning & Statistics") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox4">-->
+<!--                P3 : Business Mathematics and Logical Reasoning & Statistics-->
+<!--              </label>-->
+<!--            </div>-->
+<!--                <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox4" value="CA Foundation - P4I: Business Economics" <%=video.subject.includes("CA Foundation - P4I: Business Economics") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox4">-->
+<!--                P4I : Business Economics-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="video[subject]" id="gridcheckbox5" value="CA Foundation - P4II: Business and Commercial Knowledge"<%=video.subject.includes("CA Foundation - P4II: Business and Commercial Knowledge") ? "checked" : "" %>>-->
+<!--              <label class="form-check-label" for="gridcheckbox5">-->
+<!--                P4II : Business and Commercial Knowledge-->
+<!--              </label>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </fieldset>-->
+  
+  <div class="form-group row">
+    <div class="col-sm-12">
+      <div class="video_submit1">
+        <button type="submit" class="btn btn-primary video_submit">Submit</button>
+      </div>
+    </div>
+  </div>
+  
+  
+</form>
+
+  
+  <!--<div class="form-group row">-->
+  <!--  <label class="col-sm-2" for="exampleFormControlSelect1">Applicable Exam:</label>-->
+  <!--  <select class="form-control col-sm-4" id="exampleFormControlSelect1" name="video[exam]">-->
+  <!--    <option value="CA Final(New)">CA Final(New)</option>-->
+  <!--    <option value="CA Final(Old)">CA Final(Old)</option>-->
+  <!--    <option value="CA Intermediate(New)">CA Intermediate(New)</option>-->
+  <!--    <option value="CA IPCC(Old)">CA IPCC(Old)</option>-->
+  <!--    <option value="CA Foundation(New)">CA Foundation(New)</option>-->
+  <!--  </select>-->
+  <!--</div>-->
+   
+  <!--<div class="form-group row">-->
+  <!--  <label class="col-sm-2" for="exampleFormControlSelect2">Applicable to Attempt:</label>-->
+  <!--  <select class="form-control col-sm-4" id="exampleFormControlSelect2" name="video[attempt]">-->
+  <!--    <option value="Nov 2019">Nov 2019</option>-->
+  <!--    <option value="May 2020">May 2020</option>-->
+  <!--    <option value="Nov 2020">Nov 2020</option>-->
+  <!--    <option value="May 2021">May 2021</option>-->
+  <!--    <option value="Nov 2021">Nov 2021</option>-->
+  <!--  </select>-->
+  <!--</div>-->
+  
+    
+ <script>
+  $("#videoExamFormControlSelect_update").on("change", function(){
+   var optionVal_edit = $("#videoExamFormControlSelect_update option:selected").val();
+    if(optionVal_edit == "CA Final(New)"){
+            $('#videoSubjectsFormControlSelect1_update').removeAttr("disabled");
+            $('#videoSubjectsFormControlSelect2_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect3_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect4_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect5_update').attr("disabled", "true");
+            } else if (optionVal_edit == "CA Intermediate(New)"){
+            $('#videoSubjectsFormControlSelect1_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect2_update').removeAttr("disabled");
+            $('#videoSubjectsFormControlSelect3_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect4_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect5_update').attr("disabled", "true");
+            } else if (optionVal_edit == "CA Foundation(New)"){
+            $('#videoSubjectsFormControlSelect1_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect2_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect3_update').removeAttr("disabled");
+            $('#videoSubjectsFormControlSelect4_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect5_update').attr("disabled", "true");
+            }  else if (optionVal_edit == "CA Final(Old)"){
+            $('#videoSubjectsFormControlSelect1_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect2_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect3_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect4_update').removeAttr("disabled");
+            $('#videoSubjectsFormControlSelect5_update').attr("disabled", "true");
+            }  else if (optionVal_edit == "CA IPCC(Old)"){
+            $('#videoSubjectsFormControlSelect1_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect2_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect3_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect4_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect5_update').removeAttr("disabled");
+            } else if (optionVal_edit == "General"){
+            $('#videoSubjectsFormControlSelect1_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect2_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect3_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect4_update').attr("disabled", "true");
+            $('#videoSubjectsFormControlSelect5_update').attr("disabled", "true");
+            } ;
+})
+</script>
+
+
+<% include ../partials/footer %>

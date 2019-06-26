@@ -1,0 +1,132 @@
+<% include ../partials/header %>
+
+
+<!-------------------------------------------------------------------------------->
+<!----------------------------Downloads Table------------------------------------->
+<!-------------------------------------------------------------------------------->
+
+<div class="container">
+<p><a href="/downloads/upload" class="btn btn-primary float-right">Upload</a></p>
+
+<div class="container" id="container_download">
+<h3 class="mb3">Downloads</h3>
+<table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Name(First)</th>
+                <th>Location(Street)</th>
+                <th>Email</th>
+                <th>DOB.Date</th>
+                <th>Registered.Age</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Extn.</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+</div>
+
+<script>
+    $(document).ready(function() {
+    $('#example').DataTable( {
+         "columnDefs": [ {
+            "targets": -1,
+            "data": "picture.large",
+            "render": function ( data, type, row, meta ) {
+              return '<a href="'+data+'">Download</a>';
+            }
+          },
+          {
+				targets: -2,
+				title: 'dob.date',
+				orderable: false,
+				render: function(data, type, full, meta) {
+					return `
+                    <span class="dropdown">
+                        <a href="+data+" class="btn btn-sm btn-primary dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                          ...
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="#"> Edit </a>
+                            <a class="dropdown-item" href="#"> Update Status </a>
+                            <a class="dropdown-item" href="#"> Generate Report </a>
+                        </div>
+                    </span>
+                    <a href="#" class="btn btn-sm" title="View">
+                      ...
+                    </a>`
+				},
+			},
+			{
+			targets: 3,
+			title: "Email",
+			data: "email",
+			render: function(data, type, full, meta) {
+				return '<a href="mailto:' + data + '">' + data + '</a>';
+			},
+			},
+			{
+		    targets: 0,
+				"render": function ( data, type, row ) {
+				    var img = '<img src="'+data+'" class="rounded-circle"/>';
+                    return  img +' '+ row.name.first+'';
+                     
+			},	
+			},
+			 //{
+    //             // The `data` parameter refers to the data for the cell (defined by the
+    //             // `data` option, which defaults to the column being worked with, in
+    //             // this case `data: 0`.
+    //             "render": function ( data, type, row ) {
+    //                 var table = $('#example').DataTable();
+    //                 var data2 = table.row( 0 ).data();
+    //                 return data +' ('+ row[1]+')';
+    //             },
+    //             "targets": 0
+    //         },
+    //         { "visible": false,  "targets": [ 1 ] }
+		   
+          ],
+       "scrollY": 200,
+        "scrollX": true,
+        "ajax": {
+            "url": "https://randomuser.me/api/?results=100",
+            "dataSrc": 'results'
+        },
+        "columns":[
+        {data: 'picture.thumbnail'},
+        {data: 'name.first'},
+        {data: 'location.city'},
+        {data: 'email'},
+        {data: 'dob.date'},
+        {data: 'picture.large'},
+    ]});
+});
+</script>
+
+<% include ../partials/footer %>
+
+
+<!--For Downloads API-->
+      <!--"ajax": {-->
+      <!--      "url": "https://caexamclub-ujshah.c9users.io/api/downloads",-->
+      <!--      "dataSrc": ""-->
+      <!--  },-->
+      <!--  "columns":[-->
+      <!--  { "data": 'title'},-->
+      <!--  { "data": 'description'},-->
+      <!--  { "data": 'subject[0]'},-->
+      <!--  { "data": 'createdAt'},-->
+      <!--  { "data": 'topic'},-->
+      <!--  { "data": 'file[0].url'}-->

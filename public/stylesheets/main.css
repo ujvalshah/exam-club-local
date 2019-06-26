@@ -1,0 +1,107 @@
+.directory{
+    margin: 3rem auto;
+}
+
+.directory .directory_heading {
+    padding: 2rem 0;
+}
+
+.tc{
+    margin: auto 0;
+}
+
+.dataTables_wrapper {
+        width: 100%;
+        margin: 0 auto;
+        height: 50px;
+    }
+ .dataTables_scrollBody{
+    height: 420px !important;
+}
+
+/*#container_download{*/
+/*    padding-bottom:35rem;*/
+/*}*/
+
+#container_video{
+    overflow: auto;
+    height: 700px;
+}
+
+#container_downloads_dashboard{
+    overflow: auto;
+}
+
+#container_video_dashboard{
+    overflow: auto;
+    height: 700px;
+}
+#video_h1_dashboard{
+    display:inline-block;
+}
+
+.card_video{
+    margin-bottom: 20px;
+}
+
+.cafinal_cbox .form-check-label {
+    margin-bottom: 5px;
+}
+
+.caintermediate_cbox .form-check-label {
+    margin-bottom: 5px;
+}
+
+.teacher_submit{
+    margin: 0 auto;
+}
+
+.user_submit_register{
+    margin: 10px auto;
+}
+
+
+.username {
+    color: turquoise;
+    padding:0.5rem 1rem;
+    display: block;
+}
+
+.videobox{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.delete-video-form {
+    display: inline;
+}
+
+.tdv{
+    max-width: 25%;
+}
+
+tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+    
+td.details-control {
+    cursor: pointer;
+}
+tr.shown td.details-control {
+}
+
+
+
+/*Ajax Test*/
+
+
+
+/*#table-download{*/
+/*    width: auto;*/
+/*}*/
+
+/*table {*/
+/*    width: auto !important;*/
+/*}*/

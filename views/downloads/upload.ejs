@@ -1,0 +1,505 @@
+<% include ../partials/header %>
+<!--------------------------Download - Upload - CREATE Form(GET)------------------------>
+
+<div class="container uploadera">
+<h2 class="pb-3">Upload a file</h2>
+
+<form action="/downloads" method="POST" enctype="multipart/form-data">
+ 
+  <div class="form-group row">
+    <label for="download[author]" class="col-sm-2 col-form-label">Author</label>
+    <div class="col-sm-4">
+      <% if(!currentUser.isAdmin){%>
+      <input type="text" class="form-control" id="download[author]" name="download[author][username]" value="<%=currentUser.username%>" readonly>
+      <%} else if (currentUser.isAdmin) { %>
+      <input type="text" class="form-control" id="download[author]" name="download[author][username]" placeholder="Name of the author..">
+      <%}%>
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <label for="download[title]" class="col-sm-2 col-form-label">Title</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="download[title]" name="download[title]" placeholder="Title">
+    </div>
+  </div>
+  
+
+  <div class="form-group row">
+    <label for="document" class="col-sm-2 col-form-label">File</label>
+    <div class="col-sm-4">
+      <input type="file" class="form-control-file" id="document" name ="document">
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <label for="download[description]" class="col-sm-2 col-form-label">Description</label>
+    <div class="col-sm-10">
+    <textarea class="form-control" id="download[description]" name="download[description]" rows="3" aria-describedby="descriptionHelpBlock"></textarea>
+     <small id="descriptionHelpBlock" class="form-text text-muted">
+      Write a brief description about the file you are uploading.
+    </small>
+    </div>
+  </div>
+  
+<!------------------------------------------Topic--------------------------------->
+  <div class="form-group row">
+    <label for="download[topic]" class="col-sm-2 col-form-label">Topic</label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" id="download[topic]" name="download[topic]" placeholder="Topic">
+       <small id="descriptionHelpBlock" class="form-text text-muted">
+        Provide details of the topics covered by the file being uploaded.  
+       </small>
+    </div>
+  </div>
+
+<!------------------------------------------Exam--------------------------------->
+  <div class="form-group row">
+    <label class="col-sm-2" for="downloadExamFormControlSelect">Applicable Exam:</label>
+    <select class="form-control col-sm-4" id="downloadExamFormControlSelect" name="download[exam]">
+      <option disabled selected>Choose Exam..</option>
+      <option value="CA Final(New)">CA Final(New)</option>
+      <option value="CA Final(Old)">CA Final(Old)</option>
+      <option value="CA Intermediate(New)">CA Intermediate(New)</option>
+      <option value="CA IPCC(Old)">CA IPCC(Old)</option>
+      <option value="CA Foundation(New)">CA Foundation(New)</option>
+      <option value="General">General</option>
+    </select>
+  </div>
+  
+<!------------------------------------------Attempts--------------------------------->
+  <div class="form-group row">
+    <label class="col-sm-2" for="downloadAttemptFormControlSelect">Applicable Attempt:</label>
+    <select class="form-control col-sm-4" id="downloadAttemptFormControlSelect" name="download[attempt]">
+      <option value="Nov 2019">Nov 2019</option>
+      <option value="May 2020">May 2020</option>
+      <option value="Nov 2020">Nov 2020</option>
+      <option value="May 2021">May 2021</option>
+      <option value="Nov 2021">Nov 2021</option>
+      <!--<option value="General">General</option>-->
+    </select>
+  </div>
+  
+  <!------------------------------------------Subjects--------------------------------->
+  <div class="form-group row">
+    <label class="col-md-2" id="downloadSubjectsFormControlSelectLabel" for="downloadSubjectsFormControlSelect">Subject:</label>
+    <select class="form-control col-md-3 mr-2 mb-3" id="downloadSubjectsFormControlSelect1" name="download[subject]" disabled="true">
+          <option disabled selected>CA Final (New)</option>
+          <option value="P1: Financial Reporting">P1: Financial Reporting</option>
+          <option value="P2: Strategic Financial Management">P2: Strategic Financial Management</option>
+          <option value="P3: Advanced Auditing and Professional Ethics">P3: Advanced Auditing and Professional Ethics</option>
+          <option value="P4: Corporate & Economic Laws">P4: Corporate & Economic Laws</option>
+          <option value="P5: Strategic Cost Management and Performance Evaluation">P5: Strategic Cost Management and Performance Evaluation</option>
+          <option value="P6A: Risk Management">P6A: Risk Management</option>
+          <option value="P6B: Financial Services & Capital Markets">P6B: Financial Services & Capital Markets</option>
+          <option value="P6C: International Taxation">P6C: International Taxation</option>
+          <option value="P6D: Economic Laws">P6D: Economic Laws</option>
+          <option value="P6E: Global Financial Reporting Standards">P6E: Global Financial Reporting Standards</option>
+          <option value="P6F: Multi-disciplinary Case Study">P6F: Multi-disciplinary Case Study</option>
+          <option value="P7: Direct Tax Laws & International Taxation">P7: Direct Tax Laws & International Taxation</option>
+          <option value="P8: Indirect Tax Laws">P8: Indirect Tax Laws</option>
+          <option value="General">General</option>
+    </select>
+    
+   <select class="form-control col-md-3 mr-2 mb-3" id="downloadSubjectsFormControlSelect4" name="download[subject]" disabled="true">
+        <option disabled selected>CA Final(Old)</option>
+        <option value="P1: Financial Reporting">P1: Financial Reporting</option>
+        <option value="P2: Strategic Financial Management">P2: Strategic Financial Management</option>
+        <option value="P3: Advanced Auditing and Professional Ethics">P3: Advanced Auditing and Professional Ethics</option>
+        <option value="P4: Corporate and Allied Laws">P4A: Corporate and Allied Laws</option>
+        <option value="P5: Advanced Management Accounting">P5: Advanced Management Accounting</option>
+        <option value="P6: Information Systems Control and Audit">P6: Information Systems Control and Audit</option>
+        <option value="P7: Direct Tax Laws">P7: Direct Tax Laws</option>
+        <option value="P8:  Indirect Tax Laws">P8:  Indirect Tax Laws</option>
+        <option value="General">General</option>
+    </select>
+    
+    <select class="form-control col-md-3 mr-2 mb-3" id="downloadSubjectsFormControlSelect2" name="download[subject]" disabled="true">
+          <option disabled selected>CA Intermediate(New)</option>
+          <option value="P1: Accounting">P1: Accounting</option>
+          <option value="P2: Corporate & Other Law">P2: Corporate & Other Law</option>
+          <option value="P3: Cost and Management Accounting">P3: Cost and Management Accounting</option>
+          <option value="P4A: Income-tax law">P4A: Income-tax law</option>
+          <option value="P4B: Indirect Taxes">P4B: Indirect Taxes</option>
+          <option value="P5: Advanced Accounting">P5: Advanced Accounting</option>
+          <option value="P6: Auditing and Assurance">P6: Auditing and Assurance</option>
+          <option value="P7A: Enterprise Information Systems">P7A: Enterprise Information Systems</option>
+          <option value="P7B: Strategic Management">P7B: Strategic Management</option>
+          <option value="P8A: Financial Management">P8A: Financial Management</option>
+          <option value="P8B: Economics for Finance">P8B: Economics for Finance</option>
+          <option value="General">General</option>
+    </select>
+    
+    
+    <select class="form-control offset-md-2 col-md-3 mr-2 mb-3" id="downloadSubjectsFormControlSelect5" name="download[subject]" disabled="true">
+          <option disabled selected>CA IPCC(Old)</option>
+          <option value="P1: Accounting">P1: Accounting</option>
+          <option value="P2: Business Laws, Ethics and Communication">P2: Business Laws, Ethics and Communication</option>
+          <option value="P3: Cost Accounting and Financial Management">P3: Cost Accounting and Financial Management</option>
+          <option value="P4: Taxation">P4: Taxation</option>
+          <option value="P5: Advanced Accounting">P5: Advanced Accounting</option>
+          <option value="P6: Risk Management">P6: Risk Management</option>
+          <option value="P7: Information Technology and Strategic Management">P7: Information Technology and Strategic Management</option>
+          <option value="General">General</option>
+    </select>
+    
+    <select class="form-control col-md-3 mr-2 mb-3" id="downloadSubjectsFormControlSelect3" name="download[subject]" disabled="true" margin>
+          <option disabled selected>CA Foundation</option>
+          <option value="P1: Principles and Practice of Accounting">P1: Principles and Practice of Accounting</option>
+          <option value="P2A: Business Laws">P2A: Business Laws</option>
+          <option value="P2B: Business Correspondence and Reporting">P2B: Business Correspondence and Reporting</option>
+          <option value="P3: Business Mathematics and Logical Reasoning & Statistics">P3: Business Mathematics and Logical Reasoning & Statistics</option>
+          <option value="P4I: Business Economics">P4I: Business Economics</option>
+          <option value="P4II: Business and Commercial Knowledge">P4II: Business and Commercial Knowledge</option>
+          <option value="General">General</option>
+    </select>
+    
+  </div>
+
+  
+  <div class="form-group row">
+    <div class="col-sm-12">
+      <div class="download_submit1">
+        <button type="submit" class="btn btn-primary download_submit">Submit</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<button type="submit" class="btn btn-primary download_alert">Alert</button>
+</div>
+
+
+<script>
+  var downloadAlert = document.querySelector(".download_alert");
+    downloadAlert.addEventListener("click",function(){
+    document.querySelector('.downloadSubjectsFormControlSelect1').removeAttribute("hidden");
+    alert("Connected");    
+});
+
+
+$("#downloadExamFormControlSelect").on("change", function(){
+        var optionVal = $("#downloadExamFormControlSelect option:selected").val();
+        
+        if(optionVal == "CA Final(New)"){
+        $('#downloadSubjectsFormControlSelect1').removeAttr("disabled");
+        $('#downloadSubjectsFormControlSelect2').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect3').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect4').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect5').attr("disabled", "true");
+        } else if (optionVal == "CA Intermediate(New)"){
+        $('#downloadSubjectsFormControlSelect1').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect2').removeAttr("disabled");
+        $('#downloadSubjectsFormControlSelect3').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect4').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect5').attr("disabled", "true");
+        } else if (optionVal == "CA Foundation(New)"){
+        $('#downloadSubjectsFormControlSelect1').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect2').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect3').removeAttr("disabled");
+        $('#downloadSubjectsFormControlSelect4').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect5').attr("disabled", "true");
+        }  else if (optionVal == "CA Final(Old)"){
+        $('#downloadSubjectsFormControlSelect1').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect2').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect3').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect4').removeAttr("disabled");
+        $('#downloadSubjectsFormControlSelect5').attr("disabled", "true");
+        }  else if (optionVal == "CA IPCC(Old)"){
+        $('#downloadSubjectsFormControlSelect1').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect2').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect3').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect4').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect5').removeAttr("disabled");
+        } else if (optionVal == "General"){
+        $('#downloadSubjectsFormControlSelect1').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect2').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect3').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect4').attr("disabled", "true");
+        $('#downloadSubjectsFormControlSelect5').attr("disabled", "true");
+        } 
+});
+
+</script>
+  
+ 
+<% include ../partials/footer %>
+
+  <!------------------------------------------Subjects--------------------------------->
+  
+  <!--  <div class="form-group row">-->
+  <!--    <div class="col download-cafinalSubform-group">-->
+  <!--        <label class="col-md-2 CAFinalSubjectForm" for="CAFinalSubjectFormControlSelect">Subject:</label>-->
+  <!--        <select class="form-control col-md-4 CAFinalSubjectForm" id="CAFinalSubjectFormControlSelect" name="download[subject]">-->
+              
+  <!--       </select>-->
+  <!--   </div>-->
+  <!--  <div class="col download-caintermediateSubform-group">-->
+  <!--    <label class="col-md-2 CAIntermediateSubjectForm" for="CAIntermediateSubjectFormControlSelect">Subject:</label>-->
+  <!--    <select class="form-control col-md-4 CAIntermediateSubjectForm" id="CAIntermediateSubjectFormControlSelect" name="download[subject]">-->
+     
+  <!--    </select>-->
+  <!--  </div>-->
+  <!--  <div class="col download-cafoundationSubform-group">-->
+  <!--    <label class="col-md-2 CAFoundationSubjectForm" for="CAFoundationSubjectFormControlSelect">Subject:</label>-->
+  <!--      <select class="form-control col-md-4 CAFoundationSubjectForm" id="CAFoundationSubjectFormControlSelect" name="download[subject]">-->
+       
+  <!--      </select>-->
+  <!--  </div>-->
+
+  <!--</div>  -->
+
+  <!------------------------------------------------------Attempt Checkboxes--------------------------------------------------------->
+
+  <!--<fieldset class="form-group">-->
+  <!--  <div class="row">-->
+  <!--    <legend class="col-form-label col-sm-2 pt-0">Applicable to Attempts:-</legend>-->
+  <!--    <div class="col-sm-3">-->
+  <!--      <div class="download_attempt_checkbox">-->
+  <!--          <div class="form-check">-->
+  <!--            <input class="form-check-input" type="checkbox" name="download[attempt]" id="downloadcheckbox1" value="Nov 2019">-->
+  <!--            <label class="form-check-label" for="downloadcheckbox1">-->
+  <!--              Nov 2019-->
+  <!--            </label>-->
+  <!--          </div>-->
+  <!--          <div class="form-check">-->
+  <!--            <input class="form-check-input" type="checkbox" name="download[attempt]" id="downloadcheckbox2" value="May 2020">-->
+  <!--            <label class="form-check-label" for="downloadcheckbox2">-->
+  <!--              May 2020-->
+  <!--            </label>-->
+  <!--          </div>-->
+  <!--          <div class="form-check">-->
+  <!--            <input class="form-check-input" type="checkbox" name="download[attempt]" id="downloadcheckbox3" value="Nov 2020">-->
+  <!--            <label class="form-check-label" for="downloadcheckbox3">-->
+  <!--              Nov 2020-->
+  <!--            </label>-->
+  <!--          </div>-->
+  <!--          <div class="form-check">-->
+  <!--            <input class="form-check-input" type="checkbox" name="download[attempt]" id="downloadcheckbox4" value="May 2021">-->
+  <!--            <label class="form-check-label" for="downloadcheckbox4">-->
+  <!--              May 2021-->
+  <!--            </label>-->
+  <!--          </div>-->
+  <!--          <div class="form-check">-->
+  <!--            <input class="form-check-input" type="checkbox" name="download[attempt]" id="downloadcheckbox5" value="Nov 2021">-->
+  <!--            <label class="form-check-label" for="downloadcheckbox5">-->
+  <!--              Nov 2021-->
+  <!--            </label>-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--        </div>-->
+  <!--        </div>-->
+  <!--        </fieldset>-->
+  
+  
+  
+ 
+<!------------------------------------------------------Subject Checkboxes - CA Final(NEW)--------------------------------------------------------->
+
+  
+<!--  <fieldset class="form-group">-->
+<!--    <div class="row">-->
+<!--      <legend class="col-form-label col-sm-2 pt-0">Subjects</legend>-->
+<!--      <div class="col-sm-3">-->
+<!--        <legend class="col-form-label pt-0 font-weight-bold">CA Final(New)</legend>-->
+<!--        <div class="caFinal_cbox">-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox1" value="CA Final - P1: Financial Reporting">-->
+<!--              <label class="form-check-label" for="gridcheckbox1">-->
+<!--                P1 : Financial Reporting-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox2" value="CA Final - P2: Strategic Financial Management">-->
+<!--              <label class="form-check-label" for="gridcheckbox2">-->
+<!--                P2 : Strategic Financial Management-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox3" value="CA Final - P3: Advanced Auditing and Professional Ethics">-->
+<!--              <label class="form-check-label" for="gridcheckbox3">-->
+<!--                P3 : Advanced Auditing and Professional Ethics-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox4" value="CA Final - P4: Corporate & Economic Laws">-->
+<!--              <label class="form-check-label" for="gridcheckbox4">-->
+<!--                P4 : Corporate & Economic Laws-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox5" value="CA Final - P5: Strategic Cost Management and Performance Evaluation">-->
+<!--              <label class="form-check-label" for="gridcheckbox5">-->
+<!--                P5 : Strategic Cost Management and Performance Evaluation-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox6A" value="CA Final - P6A: Risk Management">-->
+<!--              <label class="form-check-label " for="gridcheckbox6A">-->
+<!--                P6A : Risk Management-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox6B" value=" CA Final - P6B: Financial Services & Capital Markets">-->
+<!--              <label class="form-check-label " for="gridcheckbox6B">-->
+<!--                P6B : Financial Services & Capital Markets-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox6C" value="CA Final - P6C: International Taxation">-->
+<!--              <label class="form-check-label " for="gridcheckbox6C">-->
+<!--                P6C : International Taxation-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox6D" value="CA Final - P6D: Economic Laws">-->
+<!--              <label class="form-check-label " for="gridcheckbox6D">-->
+<!--                P6D : Economic Laws-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox6E" value="CA Final - P6E: Global Financial Reporting Standards">-->
+<!--              <label class="form-check-label " for="gridcheckbox6E">-->
+<!--                P6E : Global Financial Reporting Standards-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox6F" value="CA Final - P6F: Multi-disciplinary Case Study">-->
+<!--              <label class="form-check-label " for="gridcheckbox6F">-->
+<!--                P6F : Multi-disciplinary Case Study-->
+<!--              </label>-->
+<!--            </div>-->
+            
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox7" value="CA Final - P7: Direct Tax Laws & International Taxation">-->
+<!--              <label class="form-check-label" for="gridcheckbox7">-->
+<!--                P7 : Direct Tax Laws & International Taxation-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox8" value="CA Final - P8: Indirect Tax Laws">-->
+<!--              <label class="form-check-label" for="gridcheckbox8">-->
+<!--                P8 : Indirect Tax Laws-->
+<!--              </label>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          </div>-->
+          
+<!--------------------------Subject Checkboxes - CA Intermediate(NEW)------------------------>
+<!--            <div class="col-sm-3">-->
+<!--            <legend class="col-form-label pt-0 font-weight-bold">CA Intermediate(New)</legend>-->
+<!--            <div class="caintermediate_cbox">-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox1" value="CA Intermediate - P1: Accounting">-->
+<!--              <label class="form-check-label" for="gridcheckbox1">-->
+<!--                P1 : Accounting-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox2" value="CA Intermediate - P2: Corporate & Other Law">-->
+<!--              <label class="form-check-label" for="gridcheckbox2">-->
+<!--                P2 : Corporate & Other Law-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox3" value="CA Intermediate - P3: Cost and Management Accounting">-->
+<!--              <label class="form-check-label" for="gridcheckbox3">-->
+<!--                P3 : Cost and Management Accounting-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox4" value="CA Intermediate - P4A: Income-tax law">-->
+<!--              <label class="form-check-label" for="gridcheckbox4">-->
+<!--                P4A : Income-tax law-->
+<!--              </label>-->
+<!--            </div>-->
+<!--                <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox4" value="CA Intermediate - P4B: Indirect Taxes">-->
+<!--              <label class="form-check-label" for="gridcheckbox4">-->
+<!--                P4B : Indirect Taxes-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox5" value="CA Intermediate - P5: Advanced Accounting">-->
+<!--              <label class="form-check-label" for="gridcheckbox5">-->
+<!--                P5 : Advanced Accounting-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox6" value="CA Intermediate - P6: Auditing and Assurance">-->
+<!--              <label class="form-check-label" for="gridcheckbox6">-->
+<!--                P6 : Auditing and Assurance-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox7" value="CA Intermediate - P7A: Enterprise Information Systems">-->
+<!--              <label class="form-check-label" for="gridcheckbox7">-->
+<!--                P7A : Enterprise Information Systems-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox7" value="CA Intermediate - P7B: Strategic Management">-->
+<!--              <label class="form-check-label" for="gridcheckbox7">-->
+<!--                P7B : Strategic Management-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox8" value="CA Intermediate - P8A: Financial Management">-->
+<!--              <label class="form-check-label" for="gridcheckbox8">-->
+<!--                P8A : Financial Management-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox8" value="CA Intermediate - P8B: Economics for Financet">-->
+<!--              <label class="form-check-label" for="gridcheckbox8">-->
+<!--                P8A : Economics for Finance-->
+<!--              </label>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--      </div>-->
+   
+     <!--------------------------Subject Checkboxes - CA Foundation(NEW)------------------------>
+
+<!--    <div class="col-sm-3">-->
+<!--        <legend class="col-form-label pt-0 font-weight-bold">CA Foundation(New)</legend>-->
+<!--        <div class="cafoundation_cbox">-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox1" value="CA Foundation - P1: Principles and Practice of Accounting">-->
+<!--              <label class="form-check-label" for="gridcheckbox1">-->
+<!--                P1 : Principles and Practice of Accounting-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox2" value="CA Foundation - P2A: Business Laws">-->
+<!--              <label class="form-check-label" for="gridcheckbox2">-->
+<!--                P2A : Business Laws-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox3" value="CA Foundation - P2B: Business Correspondence and Reporting">-->
+<!--              <label class="form-check-label" for="gridcheckbox3">-->
+<!--                P2B : Business Correspondence and Reporting-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox4" value="CA Foundation - P3: Business Mathematics and Logical Reasoning & Statistics">-->
+<!--              <label class="form-check-label" for="gridcheckbox4">-->
+<!--                P3 : Business Mathematics and Logical Reasoning & Statistics-->
+<!--              </label>-->
+<!--            </div>-->
+<!--                <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox4" value="CA Foundation - P4I: Business Economics">-->
+<!--              <label class="form-check-label" for="gridcheckbox4">-->
+<!--                P4I : Business Economics-->
+<!--              </label>-->
+<!--            </div>-->
+<!--            <div class="form-check">-->
+<!--              <input class="form-check-input" type="checkbox" name="download[subject]" id="gridcheckbox5" value="CA Foundation - P4II: Business and Commercial Knowledgeg">-->
+<!--              <label class="form-check-label" for="gridcheckbox5">-->
+<!--                P4II : Business and Commercial Knowledge-->
+<!--              </label>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </fieldset>-->
