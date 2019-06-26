@@ -17,6 +17,15 @@ var downloadSchema = new mongoose.Schema({
         },
         username: String,
     },
+    downloadCounter: Number,
+    downloadStudents: [{
+        id:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        username: String,
+        clickTime: {type:Date, default:Date.now},
+    }],
     date: {type: Date, default: Date.now}
 });
 

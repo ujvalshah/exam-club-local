@@ -47,8 +47,7 @@ router.get("/downloads", function(req, res){
         Download.find({}, (err,foundDownload)=>{
             if(err){console.log(err);
             } else {
-                var userid = JSON.stringify(req.user.id);
-            res.render("downloads/downloads_cafinal1Copy",{userid: userid});
+            res.render("downloads/downloads_cafinal1Copy");
             }
         });
     });
@@ -177,6 +176,24 @@ await User.findByIdAndUpdate(req.user._id, {$pull:{downloads: req.params.id}});
 });
 
 
+//----------------------------------------------------------------------------//
+//-----------------------------Downloads Counter------------------------------//
+//----------------------------------------------------------------------------//
+router.post("/download/:id/counter", async(req,res)=>{
+try{
+    if(req.user){
+    let user = await User.findById(req.user.id);
+    if(!user){return console.log("error finding user")};
+    let download = await Download.findById(req.params.id);
+    download.downloadStudents.push(user);
+    download.save();
+
+}
+
+} catch(error){
+    console.log(error);
+} 
+})
 
 
 module.exports = router;

@@ -79,19 +79,21 @@ function format (d) {
         {
     	 targets: -1,
     	 orderable: false,
-    	 "className": "align-middle text-center",
+    	 "className": "align-middle text-center actionbuttons",
     	 render: function(data, type, row, full, meta) {
 	     return `
 	      <span class="dropdown">
             <a href="#" class="pr-2" data-toggle="dropdown" aria-expanded="true"> <i class="fas fa-ellipsis-v"></i></a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="/downloads//edit"><i class="far fa-edit fa-xs"></i> Edit Details</a>
+                <a class="dropdown-item" href="/downloads/`+ row._id +`/edit"><i class="far fa-edit fa-xs"></i> Edit Details</a>
                <div class="dropdown-item"> 
+                <form action="/downloads/`+ row._id +`">
                   <button class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i> Delete</button>
-                </div>
+                </form>
+            </div>
             </div>
             </span>
-	     <a href="`+data+`"><span class="pr-2"><i class="fas fa-file-download"></i></span></a></a>
+	     <a href="`+data+`" id="`+ row._id +`" target="_blank" class="download_button"><span class="pr-2"><i class="fas fa-file-download"></i></span></a></a>
 	     
 	     <form id="bookmark-download-ajax-form" class="d-inline-block m-0 p-0" action="/user/downloads/`+ row._id +`?_method=PUT" method="POST">
                   <button type="submit" class="btn border-0 bg-transparent p-0 m-0" id="bookmark-download-ajax-form"><i class="fas fa-bookmark"></i></button>
@@ -216,7 +218,7 @@ function format (d) {
         "scrollY": 200,
         "scrollX": true,
         "ajax": {
-            "url": "https://caexamclub-ujshah.c9users.io/api/downloads/",
+            "url": "http://localhost:8081/api/downloads/",
             "dataSrc": ''
         },
          
@@ -285,9 +287,22 @@ function format (d) {
   });
 
 
+
+
+
+ 
+$('#example tbody').on( 'click', 'tr', function () {
+    alert( 'Row index: '+t.row( this ).index() );
+} );
+
+$("#example tbody").on("click",'td.actionbuttons a.download_button', function(e){
+    e.stopPropagation();
+    var buttonid = $(this).attr("id");
+    console.log(`button  was clicked!`);
+        alert(`Button with ${buttonid} was clicked`);
 });
 
-
+});
 </script>
 
 <% include ../partials/footer %>
@@ -295,7 +310,7 @@ function format (d) {
 
 <!--For Downloads API-->
       <!--"ajax": {-->
-      <!--      "url": "https://caexamclub-ujshah.c9users.io/api/downloads",-->
+      <!--      "url": "https://localhost:8081/api/downloads",-->
       <!--      "dataSrc": ""-->
       <!--  },-->
       <!--  "columns":[-->

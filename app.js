@@ -91,6 +91,18 @@ app.use(apiRoute);
 //----------------------------------------------------------------------------//
 //---------------------------------Server Message-----------------------------//
 //----------------------------------------------------------------------------//
-app.listen(process.env.PORT, process.env.IP, function (){
-   console.log("Exam server is live!");
+var port = process.env.PORT || 8081;
+app.listen(port, function () {
+    console.log(`ExamClub is live on ${port} !`);
 });
+
+// app.listen(process.env.PORT, process.env.IP, function (){
+//    console.log("Exam server is live!");
+// });
+
+
+
+
+// var server = app.listen(8081, function () {
+//     var host = server.address().address
+//     var port = server.address().port
