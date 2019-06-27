@@ -298,10 +298,14 @@ $('#example tbody').on( 'click', 'tr', function () {
 $("#example tbody").on("click",'td.actionbuttons a.download_button', function(e){
     e.stopPropagation();
     var buttonid = $(this).attr("id");
-    console.log(`button  was clicked!`);
+    var jbuttonid = buttonid;
         alert(`Button with ${buttonid} was clicked`);
+    var url = `/download/${buttonid}/counter`;
+    console.log(url);
+        $.get(url, function(data){
+            console.log(data);
+        })
 });
-
 });
 </script>
 

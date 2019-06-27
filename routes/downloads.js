@@ -179,21 +179,26 @@ await User.findByIdAndUpdate(req.user._id, {$pull:{downloads: req.params.id}});
 //----------------------------------------------------------------------------//
 //-----------------------------Downloads Counter------------------------------//
 //----------------------------------------------------------------------------//
-router.post("/download/:id/counter", async(req,res)=>{
-try{
-    if(req.user){
-    let user = await User.findById(req.user.id);
-    if(!user){return console.log("error finding user")};
-    let download = await Download.findById(req.params.id);
-    download.downloadStudents.push(user);
-    download.save();
+router.get("/download/:id/counter", (req,res)=>{
 
-}
+    User.findById(req.user.id, (err, foundUser)=>{
+        if(err){
+           return  console.log(err);
+        }  else {
+            Download.findById(req.params.id,(err,foundDownload)=>{
+                if(err){
+                    console.log(err);
+                } else {
+                    res.json([{foundDownload}, {foundUser}]);   
+                }
+            });
+        }     
+    });  
 
-} catch(error){
-    console.log(error);
-} 
-})
+
+   
+
+});
 
 
 module.exports = router;

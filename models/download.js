@@ -24,7 +24,6 @@ var downloadSchema = new mongoose.Schema({
             ref: "User"
         },
         username: String,
-        clickTime: {type:Date, default:Date.now},
     }],
     date: {type: Date, default: Date.now}
 });
