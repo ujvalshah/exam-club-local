@@ -32,7 +32,7 @@
     <%downloads.forEach(function(download, index){%>
       <tr>
         <th class="align-middle tdv text-center" scope="row"></small><%=index + 1%></small></th> 
-        <td class="align-middle tdv"><small><%=download.date.toDateString()%></small></td>
+        <td class="align-middle tdv"><small><%-download.date.toDateString()%></small></td>
         <td class="align-middle tdv" nowrap><img src="https://cdn3.vectorstock.com/i/1000x1000/30/97/flat-business-man-user-profile-avatar-icon-vector-4333097.jpg" width="55" height="55"><small><%=download.author.username%></small></td>
         <td class="align-middle tdv"><small><%=download.title%></small></td>
         <td class="align-middle tdv"><small><%=download.exam%></small></td>

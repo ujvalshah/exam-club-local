@@ -15,13 +15,14 @@
         <tr>
                 <th></th>
                 <th class="text-center">Sr.No</th>
-                <th class="text-center">Date</th>
+                <th class="text-center">Date of Upload</th>
                 <th class="text-center">Author</th>
                 <th class="text-center">Title</th>
                 <th class="text-center">Exam</th>
                 <th class="text-center">Attempt</th>
                 <th class="text-center">Subject</th>
                 <th class="text-center">_id</th>
+                <th class="text-center">No of Downloads</th>
                 <th class="text-center">Download</th>
             </tr>
  </thead>
@@ -29,13 +30,14 @@
             <tr>
                 <th></th>
                 <th class="text-center">Sr.No</th>
-                <th class="text-center">Date</th>
+                <th class="text-center">Date of Upload</th>
                 <th class="text-center">Author</th>
                 <th class="text-center">Title</th>
                 <th class="text-center">Exam</th>
                 <th class="text-center">Attempt</th>
                 <th class="text-center">Subject</th>
                 <th class="text-center">_id</th>
+                <th class="text-center">No of Downloads</th>
                 <th class="text-center">Download</th>
             </tr>
         </tfoot>
@@ -95,8 +97,8 @@ function format (d) {
             </span>
 	     <a href="`+data+`" id="`+ row._id +`" target="_blank" class="download_button"><span class="pr-2"><i class="fas fa-file-download"></i></span></a></a>
 	     
-	     <form id="bookmark-download-ajax-form" class="d-inline-block m-0 p-0" action="/user/downloads/`+ row._id +`?_method=PUT" method="POST">
-                  <button type="submit" class="btn border-0 bg-transparent p-0 m-0" id="bookmark-download-ajax-form"><i class="fas fa-bookmark"></i></button>
+        <form id="bookmark_`+ row._id +`" class="d-inline-block m-0 p-0 bookmark-ajax-form" action="/user/downloads/`+ row._id +`/bookmark" method="POST">
+                  <button type="submit" class="btn border-0 bg-transparent p-0 m-0 btn_`+ row._id +`"><i class="fas fa-bookmark"></i></button>
         </form>
 	     <a href="#" title="Share"><span class="pr-2"><i class="fas fa-share-alt"></i></span></a>` 
         },
@@ -206,13 +208,13 @@ function format (d) {
 	            },
         },
         { "visible": false,  "targets": [ 8 ] },
-    //     {
-    // 		 targets: 8,
-    // 		 className: "align-middle text-center",
-    // 		 render: function(data, type, full, meta) {
-    //          return '<small>'+ data +'</small>';
-	   //         },
-    //     },
+        {
+    		 targets: 9,
+    		 className: "align-middle text-center",
+    		 render: function(data, type, full, meta) {
+             return '<small>'+ data +'</small>';
+	           },
+        },
 	],
         "order": [[ 1, 'dsc' ]],
         "scrollY": 200,
@@ -237,6 +239,7 @@ function format (d) {
         {data: 'attempt[,]'},
         {data: 'subject[,]'},
         {data: '_id'},
+        {data: 'downloadCounter'},
         {data: 'file.0.url',  responsivePriority: -1},
     ]});
    t.on( 'order.dt search.dt', function () {
@@ -291,21 +294,48 @@ function format (d) {
 
 
  
-$('#example tbody').on( 'click', 'tr', function () {
-    alert( 'Row index: '+t.row( this ).index() );
-} );
+// $('#example tbody').on( 'click', 'tr', function () {
+//     alert( 'Row index: '+t.row( this ).index() );
+// } );
 
-$("#example tbody").on("click",'td.actionbuttons a.download_button', function(e){
+$("#example tbody").on("click",'td.actionbuttons .download_button', function(e){
     e.stopPropagation();
     var buttonid = $(this).attr("id");
-    var jbuttonid = buttonid;
-        alert(`Button with ${buttonid} was clicked`);
-    var url = `/download/${buttonid}/counter`;
-    console.log(url);
-        $.get(url, function(data){
-            console.log(data);
-        })
+        alert(`Button with ${buttonid} was clicked`); 
+    var actionUrl = `/download/${buttonid}/counter`;
+    console.log(actionUrl);
+        $.ajax({
+            url: actionUrl,
+            type: "PUT",
+            success: function(data){
+                t.ajax.reload();
+                console.log(data);
+            }
+        });
+        $(this).find("button").blur();
 });
+
+$("#example tbody").on("click",'td.actionbuttons .bookmark-ajax-form', function(e){
+    e.stopPropagation();
+    e.preventDefault();
+    var formid = $(this).attr("id").slice(9);
+    // var actionUrl = `/download/${formid}/counter`;
+    var actionUrl = 'http://localhost:8081' + $(this).attr('action');
+    // alert(`Bookmark with ${formid} was clicked and with the follwing ${actionUrl}`); 
+        $.ajax({
+            url: actionUrl,
+            type: "PUT",
+            success: function(data){
+                t.ajax.reload();
+                console.log(data);
+                alert(`This document has been successfully ${data}!`);
+            }
+        });
+        $(this).find("button").blur();
+        // $(this).find("i.fas.fa-bookmark").toggleClass("red")
+});
+
+
 });
 </script>
 

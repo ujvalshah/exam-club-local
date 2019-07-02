@@ -89,10 +89,11 @@ tfoot input {
 td.details-control {
     cursor: pointer;
 }
-tr.shown td.details-control {
+
+
+.red{
+   color:red; 
 }
-
-
 
 /*Ajax Test*/
 

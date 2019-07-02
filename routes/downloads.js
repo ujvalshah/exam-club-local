@@ -179,26 +179,86 @@ await User.findByIdAndUpdate(req.user._id, {$pull:{downloads: req.params.id}});
 //----------------------------------------------------------------------------//
 //-----------------------------Downloads Counter------------------------------//
 //----------------------------------------------------------------------------//
-router.get("/download/:id/counter", (req,res)=>{
+router.put("/download/:id/counter", (req,res)=>{
 
     User.findById(req.user.id, (err, foundUser)=>{
         if(err){
-           return  console.log(err);
+           console.log(err);
+           return  res.send(err);
         }  else {
             Download.findById(req.params.id,(err,foundDownload)=>{
                 if(err){
                     console.log(err);
                 } else {
+                    userDownloadData = {
+                        id: foundUser,
+                        };
+                    Download.findByIdAndUpdate(foundDownload, {$inc : {'downloadCounter' : 1}, $addToSet: {downloadStudents:{id:foundUser, username:foundUser.username}}}, function(err, res ){
+                        if(err){
+                            console.log(err);
+                            return  res.send(err);
+                        } else (console.log("success"));
+                    });
                     res.json([{foundDownload}, {foundUser}]);   
-                }
+                };
             });
         }     
     });  
-
-
-   
-
 });
+
+
+
+router.put("/user/downloads/:id/bookmark", (req,res)=>{
+    User.findById(req.user.id).exec(async (err,foundUser)=>{
+        if(err){
+            console.log("No user exisiting");
+        } else  {
+           var exists = foundUser.downloadBookmarks.indexOf(req.params.id);
+           console.log(exists);
+           if(exists !== -1 || undefined){
+            User.findByIdAndUpdate(req.user.id, {
+            $pull: { downloadBookmarks: req.params.id}
+            }, function(err, result){
+                if(err){console.log(err)} else (res.json("removed from your bookmarks"))
+            });
+        } else {
+            Download.findById(req.params.id,(err, foundDownload)=>{
+                if(err){
+                    req.flash("err","Some issues. Please try again");
+                } else {
+                    foundUser.downloadBookmarks.push(foundDownload);
+                    foundUser.save();
+                    res.json("added to your bookmarks");
+                }; 
+            });
+        };
+       };
+    })
+}); 
+// router.put("/user/downloads/:id/bookmark", (req,res)=>{
+
+//     User.findById(req.user.id, (err, foundUser)=>{
+//         if(err){
+//            console.log(err);
+//            return  res.send(err);
+//         }  else {
+//             Download.findById(req.params.id,(err,foundDownload)=>{
+//                 if(err){
+//                     console.log(err);
+//                 } else {
+//                     if(foundUser.downloadBookmarks.includes(foundDownload.id)){
+//                         User.findByIdAndUpdate(req.user.id, {
+//                             $pull: { downloadBookmarks: foundDownload }
+//                         })} else {
+//                             foundUser.downloadBookmarks.push(foundDownload);
+//                             foundUser.save();
+//                         }; 
+//                     res.json([{foundDownload}, {foundUser}]);
+//                 };   
+//               });
+//             };
+//         });     
+//     }); 
 
 
 module.exports = router;

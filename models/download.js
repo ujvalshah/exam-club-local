@@ -8,6 +8,7 @@ var downloadSchema = new mongoose.Schema({
     attempt: [String],
     subject: [String],
     topic: String,
+    downloadCounter: {type:Number, default:0},
     file: [{url:String, public_id:String}],
     author: {
         id : {
@@ -17,16 +18,17 @@ var downloadSchema = new mongoose.Schema({
         },
         username: String,
     },
-    downloadCounter: Number,
     downloadStudents: [{
         id:{
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
         username: String,
+        downloadDate: {type: Date, default: Date.now}
     }],
-    date: {type: Date, default: Date.now}
-});
+    date: {type: Date, default: Date.now }},
+    {timestamps:true,}
+);
 
 
 
