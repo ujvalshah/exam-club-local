@@ -6,7 +6,7 @@
 <div class="row mb-2">
   <div class="col-md-6">
   <h4 class="d-inline">Document Bookmarks</h4>    
-<p class="">You have bookmarked <span class="text-primary"><%=user.downloadBookmarks.length%></span> <%=user.downloadBookmarks.length===1 ? "document":"documents"%> until now.</p>  
+<p class="">You have <span class="text-primary"><%=user.downloadBookmarks.length%></span> bookmarked <%=user.downloadBookmarks.length===1 ? "document":"documents"%>.</p>  
   </div>
   <div class="col-md-6">
     <p><a href="/downloads/upload" class="btn btn-primary float-right">Upload</a></p>
@@ -39,13 +39,13 @@
         <th class="align-middle tdv text-center" scope="row"></small><%=index + 1%></small></th> 
         <td class="align-middle tdv"><small><%=download.date.toDateString()%></small></td>
         <td class="align-middle tdv" nowrap><img class="rounded-circle" src="https://cdn3.vectorstock.com/i/1000x1000/30/97/flat-business-man-user-profile-avatar-icon-vector-4333097.jpg" width="55" height="55"><small><%=download.author.username%></small></td>
-        <td class="align-middle tdv"><small><%=download.title%></small></td>
+        <td class="align-middle tdv title"><small><%=download.title%></small></td>
         <td class="align-middle tdv"><small><%=download.exam%></small></td>
         <td class="align-middle tdv"><small><%=download.attempt%></small></td>
         <td class="align-middle tdv" width="25%"><small><%=download.subject%></small></td>
         <td class="align-middle tdv"><small><%-download.description%></small></td>
         <td class="align-middle tdv">
-          <span class="dropdown">
+          <!-- <span class="dropdown">
             <a href="#" class="pr-2" data-toggle="dropdown" aria-expanded="true"> <i class="fas fa-ellipsis-v"></i></a>
             <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" href="/downloads/<%=download.id%>/edit"><i class="far fa-edit fa-xs"></i> Edit Details</a>
@@ -55,7 +55,10 @@
                 </form>
                 </div>
             </div>
-            </span>
+            </span> -->
+            <form class="d-inline-block m-0 p-0 stdDash-bookmark-form" id="stdDash_Bookmark_<%=download.id%>" action="/user/downloads/<%=download.id%>/bookmark?_method=PUT" method="POST">
+              <button type="submit" class="btn border-0 bg-transparent p-0 m-0"><i class="fas fa-bookmark"></i></button>
+            </form>
             <%if(download.file[0]){%>
             <a target="_blank" class="pr-2" href="<%=download.file[0].url%>"> <span><i class="fas fa-file-download"></i></span></a>
             <%} else {%>
@@ -75,7 +78,7 @@
 
 
 <h4 class="d-inline">Video Bookmarks</h4> 
-<p class="d-inline ml-1">You have bookmarked <span class="text-primary"><%=user.videoBookmarks.length%></span> <%=user.videoBookmarks.length===1 ? "video":"videos"%> until now.</p>
+<p class="d-inline ml-1">You have <span class="text-primary"><%=user.videoBookmarks.length%></span> bookmarked videos <%=user.videoBookmarks.length===1 ? "video":"videos"%>.</p>
 <div class="container border rounded videobox mt-4">
     
 <div class="container overflow-auto py-4" id="container_video_student_dashboard">
@@ -95,7 +98,7 @@
             </div>
             <div class="card-footer">
               <small class="text-muted">Upload: <%=video.createdAt.toDateString()%></small> 
-              <form id="unbookmark-video-form" class="d-inline float-right" action="/user/<%=currentUser._id%>/videos/<%=video._id%>?_method=PUT" method="POST">
+              <form  class="d-inline float-right rmBookmark-video-form" action="/user/<%=currentUser._id%>/videos/<%=video._id%>?_method=PUT" method="POST">
                   <button type="submit" class="btn btn-sm ml-1 btn-info video-student-unbookmark-button" 
                   onclick="return confirm('Are you sure you want to remove this item from your bookmarks?')">Bookmarked</button>
               </form>
@@ -109,6 +112,19 @@
 
 </div>
 
+<script>
+$(".stdDash-bookmark-form").on("submit", function(e){
+var title = $(this).closest("tr").children("td.title").text()
+var answer = confirm(`Do you really want to remove ${title} from your bookmarks?`)
+if(!answer){e.preventDefault()};
+$(this).find("button").blur();
+})
+
+$(".rmBookmark-video-form").on("click", function(e){
+$(this).find("button").blur();
+})
+
+</script>
 
 <% include ./partials/footer %>
 

@@ -328,7 +328,7 @@ $("#example tbody").on("click",'td.actionbuttons .bookmark-ajax-form', function(
             success: function(data){
                 t.ajax.reload();
                 console.log(data);
-                alert(`This document has been successfully ${data}!`);
+                alert(`${data[0].msg}`);
             }
         });
         $(this).find("button").blur();

@@ -30,7 +30,7 @@
                   </div>
                   <div class="row mt-2">
                     <div class="col-md-4 tc">
-                      Downloads
+                      Times Downloaded
                     </div>    
                     <div class="col-md-4 tc">
                       Notes Uploaded 
@@ -41,13 +41,15 @@
                   </div>                  
                   <div class="row">
                     <div class="col-md-4 tc">
-                      <p><span class="badge badge-primary">12445</span></p>
+                      <p><span class="badge badge-primary">
+                        <%=teacher.downloads.reduce(function (accumulator, download) {return accumulator + download.downloadCounter}, 0)%>
+                      </span></p>
                     </div>    
                     <div class="col-md-4 tc">
-                      <p><span class="badge badge-primary">125</span></p>
+                      <p><span class="badge badge-primary"><%=teacher.downloads.length%></span></p>
                     </div>    
                     <div class="col-md-4 tc">
-                       <p><span class="badge badge-primary">45</span></p>
+                       <p><span class="badge badge-primary"><%=teacher.videos.length%></span></p>
                     </div>
                   </div>
                   </div>

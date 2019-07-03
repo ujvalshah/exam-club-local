@@ -28,14 +28,13 @@ const { isLoggedIn, isAdmin, isFaculty, isStudent } = middleware;
 //--------------------------Teacher's Index Route-----------------------------//
 //----------------------------------------------------------------------------//
 router.get("/teachers", (req, res)=>{
-    User.find({isFaculty: true}, function(err, foundTeacher){
+    User.find({isFaculty: true}).populate({path:"downloads", select:"downloadCounter"}).exec((err, foundTeacher)=>{
         if(err){
           return console.log(err);
         }
         res.render("teacher/list", {teachers: foundTeacher, page:'teachersindex'});
-        
-    });
-})
+        // res.json(foundTeacher);
+    })});
 
 //----------------------------------------------------------------------------//
 //----------------------Teacher's Profile CREATE Form(GET)--------------------//
@@ -63,7 +62,7 @@ router.post("/teachers", (req, res)=>{
 //-----------------------Teacher's Profile SHOW Route(GET)--------------------//
 //----------------------------------------------------------------------------//
 router.get("/teachers/:id", (req, res) => {
-    User.findById(req.params.id, function(err, foundTeacher){
+    User.findById(req.params.id).populate("downloads").populate("videos").exec(function(err, foundTeacher){
         if(err){
          console.log(err);
          res.redirect("back");

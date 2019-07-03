@@ -46,7 +46,7 @@ module.exports = {
       next();
     } else {
       req.flash('error', 'You should be a teacher or an admin to access this feature!');
-      res.redirect('/login');
+      res.redirect('back');
     }
   },
   
